@@ -1,5 +1,5 @@
-import { Controller } from '@nestjs/common';
-import { GrpcMethod } from '@nestjs/microservices';
+import { Controller, UseFilters } from '@nestjs/common';
+import { GrpcMethod, RpcException } from '@nestjs/microservices';
 
 export interface HeroById {
   id: number;
@@ -19,6 +19,10 @@ export class HeroesService {
 
   @GrpcMethod()
   findOne(data: HeroById): Hero {
+    // throw new RpcException({
+    //   message: 'Hero error',
+    //   code: 10001,
+    // });
     return this.items.find(({ id }) => id === data.id);
   }
 }
