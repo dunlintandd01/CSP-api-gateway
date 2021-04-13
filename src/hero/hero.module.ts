@@ -11,7 +11,7 @@ import { HeroController } from './hero.controller';
         transport: Transport.GRPC,
         options: {
           package: 'hero',
-          protoPath: join(__dirname, 'hero.proto'),
+          protoPath: join(__dirname, '../../proto/hero.proto'),
         },
       },
     ]),
