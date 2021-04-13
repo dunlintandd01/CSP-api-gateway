@@ -5,6 +5,7 @@ import {
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
+import { ValidationError } from 'class-validator';
 import { Request, Response } from 'express';
 
 @Catch()
@@ -14,15 +15,22 @@ export class AllExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
 
-    const status =
-      exception instanceof HttpException
-        ? exception.getStatus()
-        : HttpStatus.INTERNAL_SERVER_ERROR;
+    let status = HttpStatus.INTERNAL_SERVER_ERROR;
+    let message = exception['message'];
+    let code = 'UNDEFINED';
+    if (exception instanceof HttpException) {
+      status = exception.getStatus();
+    }
+    if (exception instanceof ValidationError) {
+      status = HttpStatus.BAD_REQUEST;
+      message = exception.constraints;
+      code = 'VALIDATION_ERROR';
+    }
 
     response.json({
       statusCode: status,
-      message: exception['details'] || exception['message'],
-      code: exception['code'] || 'UNDEFINED',
+      message: exception['details'] || message,
+      code: exception['code'] || code,
       timestamp: new Date().toISOString(),
       path: request.url,
     });

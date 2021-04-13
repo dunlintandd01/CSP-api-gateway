@@ -5,11 +5,14 @@ import {
   Get,
   Param,
   UseFilters,
+  Post,
+  Body,
 } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
 
 import { AllExceptionFilter } from '../middlewares/exception.filter';
+import { CreateHeroRequestDto, CreateHeroResponseDto } from './dto';
 
 interface HeroesService {
   findOne(data: { id: number }): Observable<any>;
@@ -45,5 +48,13 @@ export class HeroController implements OnModuleInit {
     // throw new Error('test');
     const result = await this.heroesService.findOne({ id: +id });
     return result;
+  }
+
+  @Post()
+  async create(
+    @Body() createHeroInput: CreateHeroRequestDto,
+  ): Promise<CreateHeroResponseDto> {
+    const hero = { id: 1, name: createHeroInput.name };
+    return hero;
   }
 }

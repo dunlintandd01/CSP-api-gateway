@@ -3,6 +3,7 @@ import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { join } from 'path';
 
 import { AppModule } from './app.module';
+import { ValidationPipe } from './middlewares/validation.pipe';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -15,6 +16,8 @@ async function bootstrap() {
     },
   });
   await app.startAllMicroservicesAsync();
+
+  app.useGlobalPipes(new ValidationPipe());
 
   await app.listen(3000);
 }
