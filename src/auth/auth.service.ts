@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { OAuth2Client } from 'google-auth-library';
+import { google } from 'googleapis';
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
@@ -7,7 +7,7 @@ export class AuthService {
   constructor(private jwtService: JwtService) {}
 
   async adminLogin(authCode: string, redirectUrl: string) {
-    const oAuth2Client = new OAuth2Client(
+    const oAuth2Client = new google.auth.OAuth2(
       process.env.SSO_GOOGLE_CILENTID,
       process.env.SSO_GOOGLE_SECRET,
       redirectUrl,
