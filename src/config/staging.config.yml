@@ -1,0 +1,5 @@
+eventbus:
+  enabled: false
+  exchageCreateMode: "ASSERT"
+  retryTimes: 5
+  maxTimeout: 10000

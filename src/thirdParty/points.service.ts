@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { hk01 } from '@hk01-digital/shared-event-proto';
 import EventbusSDK from '@hk01-digital/eventbus-js-sdk';
-import * as sdk from './eventbusSDK.service';
+import { EventBusSDKService } from './eventbusSDK.service';
 
 const { GameCompleted } = hk01.protobuf.game.mcgame;
 
@@ -9,7 +9,7 @@ const { GameCompleted } = hk01.protobuf.game.mcgame;
 export class PointsService {
   logger: Logger;
 
-  constructor() {
+  constructor(private eventBusSDKService: EventBusSDKService) {
     this.logger = new Logger(PointsService.name);
   }
 
@@ -41,7 +41,7 @@ export class PointsService {
 
       const message = GameCompleted.create(pojo);
       const { topic, envelope } = EventbusSDK.createEnvelopeWithBody(message);
-      return sdk.publish(topic, envelope);
+      return this.eventBusSDKService.publish(topic, envelope);
     } catch (error) {
       //TODO: insert to eventbus retry queue
       this.logger.error('eventbus publish error');

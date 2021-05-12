@@ -1,25 +1,12 @@
-import { Module, DynamicModule, Logger } from '@nestjs/common';
-import { PointsService } from './services/points.service';
-import * as sdk from './services/eventbusSDK.service';
+import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { PointsService } from './points.service';
+import { EventBusSDKService } from './eventbusSDK.service';
+import { eventBusSDKProviders } from './eventBusSDK.provider';
 
 @Module({
-  providers: [PointsService],
+  imports: [ConfigModule],
+  providers: [...eventBusSDKProviders, PointsService, EventBusSDKService],
+  exports: [PointsService],
 })
-export class ThirdPartyModule {
-  static forRoot(): DynamicModule {
-    const logger = new Logger(ThirdPartyModule.name);
-    sdk
-      .init()
-      .then(() => {
-        logger.log('eventbus initialization succeeded');
-      })
-      .catch((error) => {
-        logger.error('eventbus initialization failed', error.stack);
-      });
-    return {
-      module: ThirdPartyModule,
-      providers: [PointsService],
-      exports: [PointsService],
-    };
-  }
-}
+export class ThirdPartyModule {}

@@ -1,4 +1,5 @@
 import { NestFactory } from '@nestjs/core';
+import { Logger } from '@nestjs/common';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { join } from 'path';
 import * as helmet from 'helmet';
@@ -29,7 +30,7 @@ async function bootstrap() {
 
   await app.listen(process.env.PORT || 3000);
 
-  console.log(`Application is running on: ${await app.getUrl()}`);
+  new Logger('App').log(`Application is running on: ${await app.getUrl()}`);
 }
 bootstrap();
 
