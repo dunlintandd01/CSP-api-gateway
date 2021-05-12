@@ -37,6 +37,7 @@ async function bootstrapMicroServices() {
     options: {
       package: 'hero',
       protoPath: join(__dirname, '../proto/hero.proto'),
+      url: 'localhost:50051',
     },
   });
   await app.startAllMicroservicesAsync();

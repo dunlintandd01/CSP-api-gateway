@@ -12,6 +12,7 @@ import { HeroController } from './hero.controller';
         options: {
           package: 'hero',
           protoPath: join(__dirname, '../../proto/hero.proto'),
+          url: 'localhost:50051',
         },
       },
     ]),
