@@ -6,7 +6,6 @@ import { AppModule } from './app.module';
 import { SVCAppModule } from './svc.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ValidationPipe } from './middlewares/validation.pipe';
-import * as sdk from './thirdParty/services/eventbusSDK.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -42,15 +41,5 @@ async function bootstrapMicroServices() {
     },
   });
   await app.startAllMicroservicesAsync();
-
-  /*-- eventbus --*/
-  sdk
-    .init()
-    .then(() => {
-      console.info('eventbus initialization succeeded');
-    })
-    .catch((error) => {
-      console.error('eventbus initialization failed', error.stack);
-    });
 }
 bootstrapMicroServices();

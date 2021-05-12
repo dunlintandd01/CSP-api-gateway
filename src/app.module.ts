@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
 
 import { HeroModule } from './hero/hero.module';
+import { ThirdPartyModule } from './thirdParty/thirdParty.module';
 
 @Module({
-  imports: [HeroModule],
+  imports: [HeroModule, ThirdPartyModule.forRoot()],
 })
 export class AppModule {}
