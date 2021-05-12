@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { hk01 } from '@hk01-digital/shared-event-proto';
 import EventbusSDK from '@hk01-digital/eventbus-js-sdk';
 import * as sdk from './eventbusSDK.service';
@@ -7,6 +7,12 @@ const { GameCompleted } = hk01.protobuf.game.mcgame;
 
 @Injectable()
 export class PointsService {
+  logger: Logger;
+
+  constructor() {
+    this.logger = new Logger(PointsService.name);
+  }
+
   async publishGameCompleted(
     gameId: number,
     accountId: number,
@@ -38,7 +44,7 @@ export class PointsService {
       return sdk.publish(topic, envelope);
     } catch (error) {
       //TODO: insert to eventbus retry queue
-      console.error('eventbus publish error');
+      this.logger.error('eventbus publish error');
       return false;
     }
   }

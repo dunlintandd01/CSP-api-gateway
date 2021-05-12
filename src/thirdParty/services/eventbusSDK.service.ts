@@ -1,3 +1,4 @@
+import { Logger } from '@nestjs/common';
 import EventbusSDK from '@hk01-digital/eventbus-js-sdk';
 import config from '../../config';
 
@@ -9,6 +10,8 @@ const maxTimeout = config.get('eventbus.maxTimeout');
 
 let sdk: EventbusSDK;
 
+const logger = new Logger('EventbusSDK');
+
 if (enabled) {
   sdk = new EventbusSDK(rmqUrl, exchangeCreateMode);
 }
@@ -16,17 +19,16 @@ if (enabled) {
 export const init = async (): Promise<boolean> => {
   if (enabled) {
     try {
-      //TODO:integrate logger
-      console.info('RMQ connection initializing...');
+      logger.log('RMQ connection initializing...');
 
       await sdk.connect();
 
-      console.info('RMQ connection established');
+      logger.log('RMQ connection established');
 
       return true;
     } catch (err) {
       // auto re-connect by eventbus-js-sd
-      console.error('eventbus/sdk#int RMQ connection failed... reconnecting');
+      logger.error('eventbus/sdk#int RMQ connection failed... reconnecting');
     }
   }
 };
