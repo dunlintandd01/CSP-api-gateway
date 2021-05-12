@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { join } from 'path';
+import * as helmet from 'helmet';
 
 import { AppModule } from './app.module';
 import { SVCAppModule } from './svc.module';
@@ -12,17 +13,21 @@ async function bootstrap() {
 
   // http server
   const config = new DocumentBuilder()
-    .setTitle('Cats example')
-    .setDescription('The cats API description')
+    .setTitle('CSP platform')
+    .setDescription('The CSP platform API')
     .setVersion('1.0')
-    .addTag('cats')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
 
   app.useGlobalPipes(new ValidationPipe());
+  app.use(helmet());
+  app.enableCors(); // TODO: whilelist
 
-  await app.listen(3000);
+  await app.listen(process.env.PORT || 3000);
+
+  console.log(`Application is running on: ${await app.getUrl()}`);
 }
 bootstrap();
 
