@@ -4,7 +4,6 @@ import {
   Controller,
   Get,
   Param,
-  UseFilters,
   UseGuards,
   Post,
   Body,
@@ -15,7 +14,6 @@ import { Observable } from 'rxjs';
 import { ApiBearerAuth } from '@nestjs/swagger';
 
 import { AdminAuthGuard } from '../auth/guards/admin.guard';
-import { AllExceptionFilter } from '../middlewares/exception.filter';
 import { CreateHeroRequestDto, CreateHeroResponseDto } from './dto';
 
 interface HeroesService {
@@ -38,7 +36,6 @@ export class HeroError extends Error {
 
 @Controller('hero')
 @ApiBearerAuth()
-@UseFilters(new AllExceptionFilter())
 export class HeroController implements OnModuleInit {
   private heroesService: HeroesService;
 
