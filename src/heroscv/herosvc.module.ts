@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { HeroesService } from './app.controller';
+import { HeroesService } from './herosvc.controller';
 
 @Module({
   controllers: [HeroesService],
   providers: [],
 })
-export class SeverModule {}
+export class HeroSVCModule {}

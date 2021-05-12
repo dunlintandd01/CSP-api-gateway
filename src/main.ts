@@ -3,22 +3,42 @@ import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { join } from 'path';
 
 import { AppModule } from './app.module';
+import { SVCAppModule } from './svc.module';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ValidationPipe } from './middlewares/validation.pipe';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.connectMicroservice<MicroserviceOptions>({
-    transport: Transport.GRPC,
-    options: {
-      package: 'hero', // ['hero', 'hero2']
-      protoPath: join(__dirname, '../proto/hero.proto'), // ['./hero/hero.proto', './hero/hero2.proto']
-    },
-  });
-  await app.startAllMicroservicesAsync();
+  // http server
+  const config = new DocumentBuilder()
+    .setTitle('Cats example')
+    .setDescription('The cats API description')
+    .setVersion('1.0')
+    .addTag('cats')
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('docs', app, document);
 
   app.useGlobalPipes(new ValidationPipe());
 
   await app.listen(3000);
 }
 bootstrap();
+
+async function bootstrapMicroServices() {
+  const app = await NestFactory.create(SVCAppModule);
+
+  // TODO: credentials
+
+  // NOTE: register and start microservices
+  app.connectMicroservice<MicroserviceOptions>({
+    transport: Transport.GRPC,
+    options: {
+      package: 'hero',
+      protoPath: join(__dirname, '../proto/hero.proto'),
+    },
+  });
+  await app.startAllMicroservicesAsync();
+}
+bootstrapMicroServices();
