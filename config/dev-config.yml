@@ -1,0 +1,3 @@
+eventbus:
+  enabled: false
+  exchageCreateMode: "ASSERT"

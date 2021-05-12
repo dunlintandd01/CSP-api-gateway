@@ -1,0 +1,11 @@
+env:
+  doc: runtime env
+  env: NODE_ENV
+  format: ["test", "dev", "stg", "prod"]
+  default: dev
+eventbus:
+  rmqUrl:
+    env: "RMQ_URL"
+    default: null
+  retryTimes: 5
+  maxTimeout: 10000
