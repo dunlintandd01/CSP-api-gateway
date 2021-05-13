@@ -1,5 +1,9 @@
-import * as mongoose from 'mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
-export const GameSchema = new mongoose.Schema({
-  name: String,
-});
+@Schema()
+export class Game {
+  @Prop()
+  name: string;
+}
+
+export const GameSchema = SchemaFactory.createForClass(Game);

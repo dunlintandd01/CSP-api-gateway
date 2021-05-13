@@ -32,7 +32,7 @@ export interface QUESTION_ORDER_MODE {
   RANDOM: 'RANDOM';
 }
 
-export interface Game extends Document {
+export interface IGame extends Document {
   readonly _id: string;
   readonly name: string;
 }

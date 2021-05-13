@@ -8,7 +8,7 @@ import { CreateGameReq, GameDto } from '../dtos';
 
 @Controller('admin/game')
 @ApiTags('game')
-@UseGuards(AdminAuthGuard)
+// @UseGuards(AdminAuthGuard)
 @ApiBearerAuth('admin')
 export class GameAdminController {
   constructor(private gameService: GameService) {}

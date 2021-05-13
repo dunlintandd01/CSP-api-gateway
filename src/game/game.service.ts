@@ -1,20 +1,20 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
-import { Game } from './interfaces/game.interface';
+import { InjectModel } from '@nestjs/mongoose';
+
+import { Game } from './schemas';
+import { IGame } from './interfaces';
 
 @Injectable()
 export class GameService {
-  constructor(
-    @Inject('GAME_MODEL')
-    private gameModel: Model<Game>,
-  ) {}
+  constructor(@InjectModel(Game.name) private gameModel: Model<IGame>) {}
 
-  async createGame(name: string): Promise<Game> {
+  async createGame(name: string): Promise<IGame> {
     const created = new this.gameModel({ name });
     return created.save();
   }
 
-  async getGame(id: string): Promise<Game> {
+  async getGame(id: string): Promise<IGame> {
     return this.gameModel.findById(id).exec();
   }
 }

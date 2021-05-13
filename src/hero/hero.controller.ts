@@ -7,6 +7,7 @@ import {
   Body,
   Post,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { ClientGrpc } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
 
@@ -31,6 +32,7 @@ export class HeroError extends Error {
 }
 
 @Controller('hero')
+@ApiTags('hero')
 export class HeroController implements OnModuleInit {
   private heroesService: HeroesService;
 

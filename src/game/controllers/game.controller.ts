@@ -1,10 +1,4 @@
-import {
-  Controller,
-  Get,
-  Param,
-  CacheInterceptor,
-  UseInterceptors,
-} from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
 import { GameService } from '../game.service';
@@ -18,7 +12,6 @@ export class GameController {
   @ApiOkResponse({
     type: GameDto,
   })
-  @UseInterceptors(CacheInterceptor)
   @Get('/:id')
   async getGame(@Param('id') id: string): Promise<GameDto> {
     const result = await this.gameService.getGame(id);
