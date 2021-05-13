@@ -19,6 +19,7 @@ async function bootstrap() {
     .setDescription('The CSP platform API')
     .setVersion('1.0')
     .addBearerAuth({ type: 'http' }, 'admin')
+    .addBearerAuth({ type: 'http' }, 'member')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);

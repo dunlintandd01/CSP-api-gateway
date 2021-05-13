@@ -5,8 +5,8 @@ import { DatabasesModule } from '../databases/databases.module';
 
 import { GameService } from './game.service';
 import { gameProviders } from './game.provider';
-import { GameAdminController } from './gameAdmin.controller';
-import { GameController } from './game.controller';
+import { GameAdminController } from './controllers/gameAdmin.controller';
+import { GameController } from './controllers/game.controller';
 import * as redisStore from 'cache-manager-redis-store';
 
 @Module({

@@ -18,7 +18,6 @@ export class MemberStrategy extends PassportStrategy(Strategy, 'member') {
   }
 
   async validate(payload: any) {
-    console.log('========= validate', payload);
     return { userId: payload.sub, username: payload.username };
   }
 }

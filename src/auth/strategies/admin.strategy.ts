@@ -10,12 +10,11 @@ export class AdminStrategy extends PassportStrategy(Strategy, 'admin') {
       ignoreExpiration: false,
       secretOrKey: process.env.SSO_SECRET,
       algorithms: ['HS256'],
-      issuer: 'hk01-project',
+      // issuer: 'hk01-project',
     });
   }
 
   async validate(payload: any) {
-    console.log('========= validate', payload);
     return { userId: payload.sub, username: payload.username };
   }
 }
