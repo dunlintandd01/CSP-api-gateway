@@ -1,8 +1,8 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
-import { GameService } from '../game.service';
-import { GameDto } from '../dtos';
+import { GameService } from './game.service';
+import { GameDto } from './dtos';
 
 @Controller('game')
 @ApiTags('game')

@@ -1,10 +1,10 @@
 import { Controller, Get, Post, Body, Param, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiOkResponse, ApiBearerAuth } from '@nestjs/swagger';
 
-import { AdminAuthGuard } from '../../auth/guards/admin.guard';
+import { AdminAuthGuard } from '../auth/guards/admin.guard';
 
-import { GameService } from '../game.service';
-import { CreateGameReq, GameDto } from '../dtos';
+import { GameService } from './game.service';
+import { CreateGameReq, GameDto } from './dtos';
 
 @Controller('admin/game')
 @ApiTags('game')

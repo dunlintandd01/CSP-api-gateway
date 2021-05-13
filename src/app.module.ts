@@ -11,6 +11,7 @@ import { GameModule } from './game/game.module';
 @Module({
   imports: [
     HealthModule,
+    // TODO: add validation
     ConfigModule.forRoot({
       isGlobal: true,
       load: [configuration],

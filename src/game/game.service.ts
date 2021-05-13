@@ -7,7 +7,9 @@ import { IGame } from './interfaces';
 
 @Injectable()
 export class GameService {
-  constructor(@InjectModel(Game.name) private gameModel: Model<IGame>) {}
+  constructor(
+    @InjectModel(Game.name) private readonly gameModel: Model<IGame>,
+  ) {}
 
   async createGame(name: string): Promise<IGame> {
     const created = new this.gameModel({ name });
@@ -15,6 +17,6 @@ export class GameService {
   }
 
   async getGame(id: string): Promise<IGame> {
-    return this.gameModel.findById(id).exec();
+    return this.gameModel.findById(id);
   }
 }
