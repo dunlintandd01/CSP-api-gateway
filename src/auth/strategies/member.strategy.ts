@@ -1,17 +1,22 @@
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 
 @Injectable()
 export class MemberStrategy extends PassportStrategy(Strategy, 'member') {
-  constructor() {
+  constructor(private configService: ConfigService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
       secretOrKey: readFileSync(
-        join(__dirname, '../../..', process.env.HK01_SSO_PUBLIC_KEY), // TODO: using absolute path instead
+        join(
+          __dirname,
+          '../../..',
+          configService.get<string>('HK01_SSO_PUBLIC_KEY'),
+        ), // TODO: using absolute path instead
       ),
       algorithms: ['RS256'],
     });

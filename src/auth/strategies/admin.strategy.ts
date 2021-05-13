@@ -1,14 +1,15 @@
 import { ExtractJwt, Strategy } from 'passport-jwt';
+import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class AdminStrategy extends PassportStrategy(Strategy, 'admin') {
-  constructor() {
+  constructor(private configService: ConfigService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      secretOrKey: process.env.SSO_SECRET,
+      secretOrKey: configService.get<string>('SSO_SECRET'),
       algorithms: ['HS256'],
       // issuer: 'hk01-project',
     });

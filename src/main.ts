@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { Logger } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { join } from 'path';
 import * as helmet from 'helmet';
@@ -29,7 +30,8 @@ async function bootstrap() {
   app.use(helmet());
   app.enableCors({ origin: '*' }); // TODO: whilelist
 
-  await app.listen(process.env.PORT || 3000);
+  const configService = app.get(ConfigService);
+  await app.listen(configService.get('PORT'));
 
   new Logger('App').log(`Application is running on: ${await app.getUrl()}`);
 }
@@ -51,4 +53,4 @@ async function bootstrapMicroServices() {
   });
   await app.startAllMicroservicesAsync();
 }
-bootstrapMicroServices();
+// bootstrapMicroServices();
