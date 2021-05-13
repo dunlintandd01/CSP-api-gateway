@@ -4,16 +4,12 @@ import {
   Controller,
   Get,
   Param,
-  UseGuards,
-  Post,
   Body,
-  Request,
+  Post,
 } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
-import { ApiBearerAuth } from '@nestjs/swagger';
 
-import { AdminAuthGuard } from '../auth/guards/admin.guard';
 import { CreateHeroRequestDto, CreateHeroResponseDto } from './dto';
 
 interface HeroesService {
@@ -35,7 +31,6 @@ export class HeroError extends Error {
 }
 
 @Controller('hero')
-@ApiBearerAuth()
 export class HeroController implements OnModuleInit {
   private heroesService: HeroesService;
 
@@ -45,14 +40,9 @@ export class HeroController implements OnModuleInit {
     this.heroesService = this.client.getService<HeroesService>('HeroesService');
   }
 
-  @UseGuards(AdminAuthGuard)
   @Get(':id')
-  async getById(
-    @Param('id') id: string,
-    @Request() req,
-  ): Promise<Observable<Hero>> {
+  async getById(@Param('id') id: string): Promise<Observable<Hero>> {
     // throw new Error('test');
-    console.log('==== req.user', req.user);
     const result = await this.heroesService.findOne({ id: +id });
     return result;
   }

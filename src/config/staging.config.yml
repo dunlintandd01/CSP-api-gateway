@@ -3,3 +3,6 @@ eventbus:
   exchageCreateMode: "ASSERT"
   retryTimes: 5
   maxTimeout: 10000
+cacheManager:
+  ttl: 3600 # seconds
+  max: 10 # maximum number of items in cache

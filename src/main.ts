@@ -18,7 +18,7 @@ async function bootstrap() {
     .setTitle('CSP platform')
     .setDescription('The CSP platform API')
     .setVersion('1.0')
-    .addBearerAuth()
+    .addBearerAuth({ type: 'http' }, 'admin')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
@@ -26,7 +26,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalFilters(new AllExceptionFilter());
   app.use(helmet());
-  app.enableCors(); // TODO: whilelist
+  app.enableCors({ origin: '*' }); // TODO: whilelist
 
   await app.listen(process.env.PORT || 3000);
 
