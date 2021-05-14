@@ -10,6 +10,7 @@ import { SVCAppModule } from './svc.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ValidationPipe } from './middlewares/validation.pipe';
 import { AllExceptionFilter } from './middlewares/exception.filter';
+import { LoggingInterceptor } from './middlewares/logger.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -25,6 +26,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
 
+  app.useGlobalInterceptors(new LoggingInterceptor());
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalFilters(new AllExceptionFilter());
   app.use(helmet());
