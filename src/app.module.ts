@@ -9,7 +9,7 @@ import { RedisModule } from './redis/redis.module';
 
 // import { HeroModule } from './hero/hero.module';
 import { GameModule } from './game/game.module';
-
+import { ThirdPartyModule } from './thirdParty/thirdParty.module';
 @Module({
   imports: [
     HealthModule,
@@ -39,6 +39,7 @@ import { GameModule } from './game/game.module';
     AuthModule,
     // HeroModule,
     GameModule,
+    ThirdPartyModule,
   ],
 })
 export class AppModule {}
