@@ -5,7 +5,9 @@ import { MongooseModule } from '@nestjs/mongoose';
 import configuration from './config/configuration';
 import { HealthModule } from './health/health.module';
 import { AuthModule } from './auth/auth.module';
-import { HeroModule } from './hero/hero.module';
+import { RedisModule } from './redis/redis.module';
+
+// import { HeroModule } from './hero/hero.module';
 import { GameModule } from './game/game.module';
 
 @Module({
@@ -26,8 +28,16 @@ import { GameModule } from './game/game.module';
       }),
       inject: [ConfigService],
     }),
+    RedisModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        host: configService.get<string>('REDIS_HOST'),
+        port: Number(configService.get<string>('REDIS_PORT')),
+      }),
+      inject: [ConfigService],
+    }),
     AuthModule,
-    HeroModule,
+    // HeroModule,
     GameModule,
   ],
 })

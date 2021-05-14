@@ -1,13 +1,14 @@
 import { Test } from '@nestjs/testing';
 import { getModelToken } from '@nestjs/mongoose';
 
+import { getRedisToken } from '../redis';
 import { GameAdminController } from './gameAdmin.controller';
 import { GameService } from './game.service';
 import { Game } from './schemas';
 
 describe('CatsController', () => {
   let controller: GameAdminController;
-  let service: GameService;
+  // let service: GameService;
   const game = { _id: 'testID', name: 'testing game' };
 
   class GameModel {
@@ -20,6 +21,11 @@ describe('CatsController', () => {
     static deleteOne = jest.fn().mockResolvedValue(true);
   }
 
+  class RedisClient {
+    static get = jest.fn().mockResolvedValue(JSON.stringify(game));
+    static set = jest.fn().mockResolvedValue(true);
+  }
+
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
       controllers: [GameAdminController],
@@ -29,10 +35,14 @@ describe('CatsController', () => {
           provide: getModelToken(Game.name),
           useValue: GameModel,
         },
+        {
+          provide: getRedisToken(),
+          useValue: RedisClient,
+        },
       ],
     }).compile();
 
-    service = moduleRef.get<GameService>(GameService);
+    // service = moduleRef.get<GameService>(GameService);
     controller = moduleRef.get<GameAdminController>(GameAdminController);
   });
 
