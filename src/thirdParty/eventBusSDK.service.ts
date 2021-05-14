@@ -8,13 +8,12 @@ export class EventBusSDKService {
   ) {}
 
   async publish(routingPath: any, envelope: any): Promise<any> {
-    const { retryTimes, maxTimeout } = this.configService.get('eventbus');
     await this.sdk.publish({
       topic: routingPath,
       envelope: envelope,
       retry: {
-        retries: retryTimes,
-        maxTimeout: maxTimeout,
+        retries: this.configService.get<string>('EVENT_BUS_RETRY_TIME'),
+        maxTimeout: this.configService.get<string>('EVENT_BUS_MAX_TIMEOUT'),
       },
     });
   }
