@@ -10,7 +10,7 @@ export const eventBusSDKProviders = [
     useFactory: async (configService: ConfigService): Promise<EventBusSDK> => {
       const sdk = new EventBusSDK(
         configService.get<string>('RMQ_URL'),
-        configService.get<string>('EVNET_BUS_EXCHAGE_CREATE_MODE'),
+        configService.get<string>('EVENT_BUS_EXCHANGE_CREATE_MODE'),
       );
 
       logger.log('RMQ connection initializing...');
