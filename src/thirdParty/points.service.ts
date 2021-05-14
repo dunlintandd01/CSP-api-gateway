@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { hk01 } from '@hk01-digital/shared-event-proto';
 import EventbusSDK from '@hk01-digital/eventbus-js-sdk';
-import { EventBusSDKService } from './eventbusSDK.service';
+import { EventBusSDKService } from './eventBusSDK.service';
 
 const { GameCompleted } = hk01.protobuf.game.mcgame;
 
