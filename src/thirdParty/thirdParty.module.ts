@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { PointsService } from './points.service';
-import { EventBusSDKService } from './eventbusSDK.service';
+import { EventBusSDKService } from './eventBusSDK.service';
 import { eventBusSDKProviders } from './eventBusSDK.provider';
 
 @Module({
