@@ -14,7 +14,7 @@ export const eventBusSDKProviders = [
       );
 
       logger.log('RMQ connection initializing...');
-      await sdk.connect();
+      sdk.connect();
       logger.log('RMQ connection established');
 
       return sdk;
