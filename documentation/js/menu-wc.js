@@ -181,16 +181,20 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/ThirdPartyModule.html" data-type="entity-link">ThirdPartyModule</a>
                                 <li class="chapter inner">
                                     <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                        'data-target="#injectables-links-module-ThirdPartyModule-cc20d4846c329b1a161acb8f6e104a1e"' : 'data-target="#xs-injectables-links-module-ThirdPartyModule-cc20d4846c329b1a161acb8f6e104a1e"' }>
+                                        'data-target="#injectables-links-module-ThirdPartyModule-0178bc427574d5386ffbe4a667f45ea3"' : 'data-target="#xs-injectables-links-module-ThirdPartyModule-0178bc427574d5386ffbe4a667f45ea3"' }>
                                         <span class="icon ion-md-arrow-round-down"></span>
                                         <span>Injectables</span>
                                         <span class="icon ion-ios-arrow-down"></span>
                                     </div>
-                                    <ul class="links collapse" ${ isNormalMode ? 'id="injectables-links-module-ThirdPartyModule-cc20d4846c329b1a161acb8f6e104a1e"' :
-                                        'id="xs-injectables-links-module-ThirdPartyModule-cc20d4846c329b1a161acb8f6e104a1e"' }>
+                                    <ul class="links collapse" ${ isNormalMode ? 'id="injectables-links-module-ThirdPartyModule-0178bc427574d5386ffbe4a667f45ea3"' :
+                                        'id="xs-injectables-links-module-ThirdPartyModule-0178bc427574d5386ffbe4a667f45ea3"' }>
                                         <li class="link">
                                             <a href="injectables/PointsService.html"
                                                 data-type="entity-link" data-context="sub-entity" data-context-id="modules" }>PointsService</a>
+                                        </li>
+                                        <li class="link">
+                                            <a href="injectables/S3Service.html"
+                                                data-type="entity-link" data-context="sub-entity" data-context-id="modules" }>S3Service</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -296,6 +300,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 </li>
                                 <li class="link">
                                     <a href="injectables/PointsService.html" data-type="entity-link">PointsService</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/S3Service.html" data-type="entity-link">S3Service</a>
                                 </li>
                                 <li class="link">
                                     <a href="injectables/ValidationPipe.html" data-type="entity-link">ValidationPipe</a>
