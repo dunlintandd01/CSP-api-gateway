@@ -2,22 +2,13 @@ import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 
-import configuration from './config/configuration'
-import { HealthModule } from './health/health.module'
+import { CoreModule } from './core/core.module'
 import { AuthModule } from './auth/auth.module'
-import { RedisModule } from './redis/redis.module'
-
-// import { HeroModule } from './hero/hero.module';
 import { GameModule } from './game/game.module'
 
 @Module({
   imports: [
-    HealthModule,
-    // TODO: add validation
-    ConfigModule.forRoot({
-      isGlobal: true,
-      load: [configuration],
-    }),
+    CoreModule,
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
@@ -32,16 +23,7 @@ import { GameModule } from './game/game.module'
       }),
       inject: [ConfigService],
     }),
-    RedisModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
-        host: configService.get<string>('REDIS_HOST'),
-        port: Number(configService.get<string>('REDIS_PORT')),
-      }),
-      inject: [ConfigService],
-    }),
     AuthModule,
-    // HeroModule,
     GameModule,
   ],
 })

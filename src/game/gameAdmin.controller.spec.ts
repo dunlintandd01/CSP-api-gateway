@@ -1,7 +1,7 @@
 import { Test } from '@nestjs/testing'
 import { getRepositoryToken } from '@nestjs/typeorm'
 
-import { getRedisToken } from '../redis'
+import { getRedisToken } from '../core/redis'
 import { GameAdminController } from './gameAdmin.controller'
 import { GameService } from './game.service'
 import { Game } from './entities/game.entity'

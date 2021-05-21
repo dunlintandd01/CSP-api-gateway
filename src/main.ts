@@ -1,13 +1,13 @@
 import { NestFactory } from '@nestjs/core'
 import { Logger } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'
 import * as helmet from 'helmet'
 
 import { AppModule } from './app.module'
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'
-import { ValidationPipe } from './middlewares/validation.pipe'
-import { AllExceptionFilter } from './middlewares/exception.filter'
-import { LoggingInterceptor } from './middlewares/logger.interceptor'
+import { ValidationPipe } from './core/middlewares/validation.pipe'
+import { AllExceptionFilter } from './core/middlewares/exception.filter'
+import { LoggingInterceptor } from './core/middlewares/logger.interceptor'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)

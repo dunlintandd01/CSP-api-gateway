@@ -3,9 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { Redis } from 'ioredis'
 
-import { IGame } from './interfaces'
 import { Game } from './entities/game.entity'
-import { InjectRedis } from '../redis'
+import { InjectRedis } from '../core/redis'
 
 @Injectable()
 export class GameService {
