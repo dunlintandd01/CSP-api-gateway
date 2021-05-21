@@ -96,7 +96,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 </li>
                             </li>
                             <li class="link">
+                                <a href="modules/CampaignModule.html" data-type="entity-link">CampaignModule</a>
+                            </li>
+                            <li class="link">
                                 <a href="modules/CoreModule.html" data-type="entity-link">CoreModule</a>
+                            </li>
+                            <li class="link">
+                                <a href="modules/FormModule.html" data-type="entity-link">FormModule</a>
                             </li>
                             <li class="link">
                                 <a href="modules/GameModule.html" data-type="entity-link">GameModule</a>
@@ -154,9 +160,6 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                     </li>
                             </li>
                             <li class="link">
-                                <a href="modules/LotteryModule.html" data-type="entity-link">LotteryModule</a>
-                            </li>
-                            <li class="link">
                                 <a href="modules/OperationLogModule.html" data-type="entity-link">OperationLogModule</a>
                             </li>
                             <li class="link">
@@ -167,6 +170,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                             <li class="link">
                                 <a href="modules/RedisModule.html" data-type="entity-link">RedisModule</a>
+                            </li>
+                            <li class="link">
+                                <a href="modules/RewardModule.html" data-type="entity-link">RewardModule</a>
                             </li>
                             <li class="link">
                                 <a href="modules/ThirdPartyModule.html" data-type="entity-link">ThirdPartyModule</a>
