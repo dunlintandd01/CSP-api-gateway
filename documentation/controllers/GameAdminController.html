@@ -87,7 +87,15 @@
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
+                                <a href="#deleteGame">deleteGame</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
                                 <a href="#getGame">getGame</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#updateGame">updateGame</a>
                             </li>
                         </ul>
                     </td>
@@ -137,8 +145,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="29"
-                            class="link-to-prism">src/game/gameAdmin.controller.ts:29</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="39"
+                            class="link-to-prism">src/game/gameAdmin.controller.ts:39</a></div>
                 </td>
             </tr>
 
@@ -189,20 +197,20 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="getGame"></a>
+                    <a name="deleteGame"></a>
                     <span class="name">
                         <b>
                             <span class="modifier">Async</span>
-                            getGame
+                            deleteGame
                         </b>
-                        <a href="#getGame"><span class="icon ion-ios-link"></span></a>
+                        <a href="#deleteGame"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getGame(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>deleteGame(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
                 </td>
             </tr>
 
@@ -210,14 +218,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@Get(&#x27;/:id&#x27;)<br />@ApiOkResponse({type: GameDto})<br /></code>
+                    <code>@Delete(&#x27;/:id&#x27;)<br />@ApiOkResponse({type: GameDto})<br /></code>
                 </td>
             </tr>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="20"
-                            class="link-to-prism">src/game/gameAdmin.controller.ts:20</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="61"
+                            class="link-to-prism">src/game/gameAdmin.controller.ts:61</a></div>
                 </td>
             </tr>
 
@@ -239,7 +247,86 @@
                                 <tr>
                                     <td>id</td>
                                     <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getGame"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Async</span>
+                            getGame
+                        </b>
+                        <a href="#getGame"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getGame(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Get(&#x27;/:id&#x27;)<br />@ApiOkResponse({type: GameDto})<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="30"
+                            class="link-to-prism">src/game/gameAdmin.controller.ts:30</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
                                     </td>
 
                                     <td>
@@ -264,17 +351,118 @@
             </tr>
         </tbody>
     </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateGame"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Async</span>
+                            updateGame
+                        </b>
+                        <a href="#updateGame"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateGame(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, body: <a href="../classes/CreateGameReq.html">CreateGameReq</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Put(&#x27;/:id&#x27;)<br />@ApiOkResponse({type: GameDto})<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="49"
+                            class="link-to-prism">src/game/gameAdmin.controller.ts:49</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>body</td>
+                                    <td>
+                                                <code><a href="../classes/CreateGameReq.html" target="_self" >CreateGameReq</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </section>    </div>
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Controller, Get, Post, Body, Param, UseGuards } from &#x27;@nestjs/common&#x27;;
-import { ApiTags, ApiOkResponse, ApiBearerAuth } from &#x27;@nestjs/swagger&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+  Controller,
+  Get,
+  Post,
+  Put,
+  Delete,
+  Body,
+  Param,
+  UseGuards,
+} from &#x27;@nestjs/common&#x27;
+import { ApiTags, ApiOkResponse, ApiBearerAuth } from &#x27;@nestjs/swagger&#x27;
 
-import { AdminAuthGuard } from &#x27;../auth/guards/admin.guard&#x27;;
+import { AdminAuthGuard } from &#x27;../auth/guards/admin.guard&#x27;
 
-import { GameService } from &#x27;./game.service&#x27;;
-import { CreateGameReq, GameDto } from &#x27;./dtos&#x27;;
+import { GameService } from &#x27;./game.service&#x27;
+import { CreateGameReq, GameDto } from &#x27;./dtos&#x27;
+import { Game } from &#x27;./entities&#x27;
 
 @Controller(&#x27;admin/game&#x27;)
 @ApiTags(&#x27;game&#x27;)
@@ -287,9 +475,9 @@ export class GameAdminController {
   @ApiOkResponse({
     type: GameDto,
   })
-  async getGame(@Param(&#x27;id&#x27;) id: string): Promise&lt;GameDto&gt; {
-    const result &#x3D; await this.gameService.getGame(id);
-    return result;
+  async getGame(@Param(&#x27;id&#x27;) id: number): Promise&lt;GameDto&gt; {
+    const result &#x3D; await this.gameService.getGame(id)
+    return result
   }
 
   @Post(&#x27;/&#x27;)
@@ -297,9 +485,30 @@ export class GameAdminController {
     type: GameDto,
   })
   async createGame(@Body() body: CreateGameReq): Promise&lt;GameDto&gt; {
-    const { name } &#x3D; body;
-    const result &#x3D; await this.gameService.createGame(name);
-    return result;
+    const { name } &#x3D; body
+    const result &#x3D; await this.gameService.createGame(name)
+    return result
+  }
+
+  @Put(&#x27;/:id&#x27;)
+  @ApiOkResponse({
+    type: GameDto,
+  })
+  async updateGame(
+    @Param(&#x27;id&#x27;) id: number,
+    @Body() body: CreateGameReq,
+  ): Promise&lt;void&gt; {
+    await this.gameService.updateGame(id, body as Game)
+    return
+  }
+
+  @Delete(&#x27;/:id&#x27;)
+  @ApiOkResponse({
+    type: GameDto,
+  })
+  async deleteGame(@Param(&#x27;id&#x27;) id: number): Promise&lt;void&gt; {
+    await this.gameService.deleteGame(id)
+    return
   }
 }
 </code></pre>

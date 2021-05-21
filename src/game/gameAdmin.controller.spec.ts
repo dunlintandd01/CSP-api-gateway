@@ -1,29 +1,30 @@
-import { Test } from '@nestjs/testing';
-import { getModelToken } from '@nestjs/mongoose';
+import { Test } from '@nestjs/testing'
+import { getRepositoryToken } from '@nestjs/typeorm'
 
-import { getRedisToken } from '../redis';
-import { GameAdminController } from './gameAdmin.controller';
-import { GameService } from './game.service';
-import { Game } from './schemas';
+import { getRedisToken } from '../redis'
+import { GameAdminController } from './gameAdmin.controller'
+import { GameService } from './game.service'
+import { Game } from './entities/game.entity'
 
-describe('CatsController', () => {
-  let controller: GameAdminController;
+describe('Game Admin Controller', () => {
+  let controller: GameAdminController
   // let service: GameService;
-  const game = { _id: 'testID', name: 'testing game' };
+  const fakeID = 123
+  const game = { id: fakeID, name: 'testing game' }
 
-  class GameModel {
-    constructor(private data) {}
-    save = jest.fn().mockResolvedValue(this.data);
-    static find = jest.fn().mockResolvedValue([game]);
-    static findOne = jest.fn().mockResolvedValue(game);
-    static findById = jest.fn().mockResolvedValue(game);
-    static findOneAndUpdate = jest.fn().mockResolvedValue(game);
-    static deleteOne = jest.fn().mockResolvedValue(true);
+  class GameRepo {
+    static findOne = jest.fn().mockResolvedValue(game)
+    static save = jest.fn().mockImplementation((game) => {
+      return game.id ? game : Object.assign({ id: fakeID }, game)
+    })
+    static create = jest.fn().mockImplementation((game) => game)
+    static softDelete = jest.fn().mockResolvedValue(null)
+    static update = jest.fn().mockResolvedValue(null)
   }
 
   class RedisClient {
-    static get = jest.fn().mockResolvedValue(JSON.stringify(game));
-    static set = jest.fn().mockResolvedValue(true);
+    static get = jest.fn().mockResolvedValue(JSON.stringify(game))
+    static set = jest.fn().mockResolvedValue(true)
   }
 
   beforeEach(async () => {
@@ -32,26 +33,26 @@ describe('CatsController', () => {
       providers: [
         GameService,
         {
-          provide: getModelToken(Game.name),
-          useValue: GameModel,
+          provide: getRepositoryToken(Game),
+          useValue: GameRepo,
         },
         {
           provide: getRedisToken(),
           useValue: RedisClient,
         },
       ],
-    }).compile();
+    }).compile()
 
     // service = moduleRef.get<GameService>(GameService);
-    controller = moduleRef.get<GameAdminController>(GameAdminController);
-  });
+    controller = moduleRef.get<GameAdminController>(GameAdminController)
+  })
 
   describe('findOne', () => {
     it('should return a game', async () => {
       // jest.spyOn(service, 'getGame').mockResolvedValueOnce(game);
-      expect(await controller.getGame('testID')).toBe(game);
-    });
-  });
+      expect(await controller.getGame(fakeID)).toBe(game)
+    })
+  })
 
   describe('createOne', () => {
     it('should return a game', async () => {
@@ -59,8 +60,23 @@ describe('CatsController', () => {
       expect(
         await controller.createGame({ name: 'create a test game' }),
       ).toStrictEqual({
+        id: fakeID,
         name: 'create a test game',
-      });
-    });
-  });
-});
+      })
+    })
+  })
+
+  describe('updateOne', () => {
+    it('should return void', async () => {
+      expect(
+        await controller.updateGame(fakeID, { name: 'update a test game' }),
+      ).toBeUndefined()
+    })
+  })
+
+  describe('deleteOne', () => {
+    it('should return void', async () => {
+      expect(await controller.deleteGame(fakeID)).toBeUndefined()
+    })
+  })
+})

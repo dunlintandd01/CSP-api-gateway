@@ -65,12 +65,6 @@
         </p>
 
 
-            <p class="comment">
-                <h3>Extends</h3>
-            </p>
-            <p class="comment">
-                    <code>Document</code>
-            </p>
 
         <section>
             <h3 id="index">Index</h3>
@@ -85,7 +79,7 @@
                         <td class="col-md-4">
                             <ul class="index-list">
                                 <li>
-                                        <a href="#_id">_id</a>
+                                        <a href="#id">id</a>
                                 </li>
                                 <li>
                                         <a href="#name">name</a>
@@ -105,13 +99,13 @@
                         <tbody>
                                 <tr>
                                     <td class="col-md-4">
-                                        <a name="_id"></a>
-                                        <span class="name"><b>_id</b><a href="#_id"><span class="icon ion-ios-link"></span></a></span>
+                                        <a name="id"></a>
+                                        <span class="name"><b>id</b><a href="#id"><span class="icon ion-ios-link"></span></a></span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>_id:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                        <code>id:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -119,7 +113,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
 
                                         </td>
                                     </tr>
@@ -165,42 +159,42 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export interface GAME_TYPE {
-  NONE: &#x27;NONE&#x27;;
-  MULTIPLE_CHOICE: &#x27;MULTIPLE_CHOICE&#x27;;
-  PSY_TEST: &#x27;PSY_TEST&#x27;;
+  NONE: &#x27;NONE&#x27;
+  MULTIPLE_CHOICE: &#x27;MULTIPLE_CHOICE&#x27;
+  PSY_TEST: &#x27;PSY_TEST&#x27;
 }
 export interface GAME_STATUS {
-  DRAFT: &#x27;DRAFT&#x27;;
-  PUBLISHED: &#x27;PUBLISHED&#x27;;
-  DELETED: &#x27;DELETED&#x27;;
+  DRAFT: &#x27;DRAFT&#x27;
+  PUBLISHED: &#x27;PUBLISHED&#x27;
+  DELETED: &#x27;DELETED&#x27;
 }
 
 export interface USER_AGENT_LIMIT_MODE {
-  NONE: &#x27;NONE&#x27;;
-  HK01_WEBVIEW_ONLY: &#x27;HK01_WEBVIEW_ONLY&#x27;;
-  WEB_ONLY: &#x27;WEB_ONLY&#x27;;
+  NONE: &#x27;NONE&#x27;
+  HK01_WEBVIEW_ONLY: &#x27;HK01_WEBVIEW_ONLY&#x27;
+  WEB_ONLY: &#x27;WEB_ONLY&#x27;
 }
 export interface AUTH_MODE {
-  PUBLIC: &#x27;PUBLIC&#x27;;
-  STAFF: &#x27;STAFF&#x27;;
-  MEMBER_WITHOUT_BIND_PHONE: &#x27;MEMBER_WITHOUT_BIND_PHONE&#x27;;
-  MEMBER_BIND_PHONE: &#x27;MEMBER_BIND_PHONE&#x27;;
+  PUBLIC: &#x27;PUBLIC&#x27;
+  STAFF: &#x27;STAFF&#x27;
+  MEMBER_WITHOUT_BIND_PHONE: &#x27;MEMBER_WITHOUT_BIND_PHONE&#x27;
+  MEMBER_BIND_PHONE: &#x27;MEMBER_BIND_PHONE&#x27;
 }
 
 export interface ANSWER_DISPLAY_MODE {
-  NONE: &#x27;NONE&#x27;;
-  IN_QUESTION: &#x27;IN_QUESTION&#x27;;
-  POST_GAME: &#x27;POST_GAME&#x27;;
+  NONE: &#x27;NONE&#x27;
+  IN_QUESTION: &#x27;IN_QUESTION&#x27;
+  POST_GAME: &#x27;POST_GAME&#x27;
 }
 export interface QUESTION_ORDER_MODE {
-  ASC: &#x27;ASC&#x27;;
-  DESC: &#x27;DESC&#x27;;
-  RANDOM: &#x27;RANDOM&#x27;;
+  ASC: &#x27;ASC&#x27;
+  DESC: &#x27;DESC&#x27;
+  RANDOM: &#x27;RANDOM&#x27;
 }
 
-export interface IGame extends Document {
-  readonly _id: string;
-  readonly name: string;
+export interface IGame {
+  readonly id: number
+  readonly name: string
 }
 </code></pre>
     </div>

@@ -187,17 +187,17 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Module } from &#x27;@nestjs/common&#x27;;
-import { ConfigModule, ConfigService } from &#x27;@nestjs/config&#x27;;
-import { MongooseModule } from &#x27;@nestjs/mongoose&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Module } from &#x27;@nestjs/common&#x27;
+import { ConfigModule, ConfigService } from &#x27;@nestjs/config&#x27;
+import { TypeOrmModule } from &#x27;@nestjs/typeorm&#x27;
 
-import configuration from &#x27;./config/configuration&#x27;;
-import { HealthModule } from &#x27;./health/health.module&#x27;;
-import { AuthModule } from &#x27;./auth/auth.module&#x27;;
-import { RedisModule } from &#x27;./redis/redis.module&#x27;;
+import configuration from &#x27;./config/configuration&#x27;
+import { HealthModule } from &#x27;./health/health.module&#x27;
+import { AuthModule } from &#x27;./auth/auth.module&#x27;
+import { RedisModule } from &#x27;./redis/redis.module&#x27;
 
 // import { HeroModule } from &#x27;./hero/hero.module&#x27;;
-import { GameModule } from &#x27;./game/game.module&#x27;;
+import { GameModule } from &#x27;./game/game.module&#x27;
 
 @Module({
   imports: [
@@ -207,13 +207,17 @@ import { GameModule } from &#x27;./game/game.module&#x27;;
       isGlobal: true,
       load: [configuration],
     }),
-    MongooseModule.forRootAsync({
+    TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) &#x3D;&gt; ({
-        uri: configService.get&lt;string&gt;(&#x27;MONGO_URL&#x27;),
-        user: configService.get&lt;string&gt;(&#x27;MONGO_USER&#x27;),
-        pass: configService.get&lt;string&gt;(&#x27;MONGO_PASS&#x27;),
-        dbName: configService.get&lt;string&gt;(&#x27;MONGO_DATABASE&#x27;),
+        type: &#x27;mysql&#x27;,
+        host: configService.get&lt;string&gt;(&#x27;MYSQL_HOST&#x27;),
+        port: configService.get&lt;number&gt;(&#x27;MYSQL_PORT&#x27;),
+        username: configService.get&lt;string&gt;(&#x27;MYSQL_USER&#x27;),
+        password: configService.get&lt;string&gt;(&#x27;MYSQL_PASSWORD&#x27;),
+        database: configService.get&lt;string&gt;(&#x27;MYSQL_DATABASE&#x27;),
+        autoLoadEntities: true,
+        synchronize: true,
       }),
       inject: [ConfigService],
     }),

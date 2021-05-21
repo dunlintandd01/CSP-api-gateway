@@ -81,11 +81,19 @@
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
+                                <a href="#deleteGame">deleteGame</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
                                 <a href="#getGame">getGame</a>
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
                                 <a href="#getGameWithCache">getGameWithCache</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#updateGame">updateGame</a>
                             </li>
                         </ul>
                     </td>
@@ -105,7 +113,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(gameModel: <a href="../interfaces/IGame.html">Model<IGame></a>, redisClient: Redis)</code>
+<code>constructor(gameRepository: <a href="../classes/Game.html">Repository<Game></a>, redisClient: Redis)</code>
                     </td>
                 </tr>
                         <tr>
@@ -128,10 +136,10 @@
                                         </thead>
                                         <tbody>
                                                 <tr>
-                                                        <td>gameModel</td>
+                                                        <td>gameRepository</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../interfaces/IGame.html" target="_self" >Model&lt;IGame&gt;</a></code>
+                                                                        <code><a href="../classes/Game.html" target="_self" >Repository&lt;Game&gt;</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -189,8 +197,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="17"
-                            class="link-to-prism">src/game/game.service.ts:17</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="18"
+                            class="link-to-prism">src/game/game.service.ts:18</a></div>
                 </td>
             </tr>
 
@@ -227,7 +235,79 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../interfaces/IGame.html" target="_self" >Promise&lt;IGame&gt;</a></code>
+                        <b>Returns : </b>        <code><a href="../classes/Game.html" target="_self" >Promise&lt;Game&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteGame"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Async</span>
+                            deleteGame
+                        </b>
+                        <a href="#deleteGame"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>deleteGame(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="33"
+                            class="link-to-prism">src/game/game.service.ts:33</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
 
                     </div>
                     <div class="io-description">
@@ -254,15 +334,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getGame(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>getGame(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="22"
-                            class="link-to-prism">src/game/game.service.ts:22</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="29"
+                            class="link-to-prism">src/game/game.service.ts:29</a></div>
                 </td>
             </tr>
 
@@ -284,7 +364,7 @@
                                 <tr>
                                     <td>id</td>
                                     <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
                                     </td>
 
                                     <td>
@@ -299,7 +379,7 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../interfaces/IGame.html" target="_self" >Promise&lt;IGame&gt;</a></code>
+                        <b>Returns : </b>        <code><a href="../classes/Game.html" target="_self" >Promise&lt;Game&gt;</a></code>
 
                     </div>
                     <div class="io-description">
@@ -326,15 +406,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getGameWithCache(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>getGameWithCache(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="26"
-                            class="link-to-prism">src/game/game.service.ts:26</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="38"
+                            class="link-to-prism">src/game/game.service.ts:38</a></div>
                 </td>
             </tr>
 
@@ -356,7 +436,7 @@
                                 <tr>
                                     <td>id</td>
                                     <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
                                     </td>
 
                                     <td>
@@ -371,7 +451,91 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../interfaces/IGame.html" target="_self" >Promise&lt;IGame&gt;</a></code>
+                        <b>Returns : </b>        <code><a href="../classes/Game.html" target="_self" >Promise&lt;Game&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateGame"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Async</span>
+                            updateGame
+                        </b>
+                        <a href="#updateGame"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateGame(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, game: <a href="../classes/Game.html">Game</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="24"
+                            class="link-to-prism">src/game/game.service.ts:24</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>game</td>
+                                    <td>
+                                                <code><a href="../classes/Game.html" target="_self" >Game</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
 
                     </div>
                     <div class="io-description">
@@ -387,43 +551,55 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@nestjs/common&#x27;;
-import { Model } from &#x27;mongoose&#x27;;
-import { InjectModel } from &#x27;@nestjs/mongoose&#x27;;
-import { Redis } from &#x27;ioredis&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@nestjs/common&#x27;
+import { InjectRepository } from &#x27;@nestjs/typeorm&#x27;
+import { Repository } from &#x27;typeorm&#x27;
+import { Redis } from &#x27;ioredis&#x27;
 
-import { Game } from &#x27;./schemas&#x27;;
-import { IGame } from &#x27;./interfaces&#x27;;
-import { InjectRedis } from &#x27;../redis&#x27;;
+import { IGame } from &#x27;./interfaces&#x27;
+import { Game } from &#x27;./entities/game.entity&#x27;
+import { InjectRedis } from &#x27;../redis&#x27;
 
 @Injectable()
 export class GameService {
   constructor(
-    @InjectModel(Game.name) private readonly gameModel: Model&lt;IGame&gt;,
+    @InjectRepository(Game)
+    private gameRepository: Repository&lt;Game&gt;,
     @InjectRedis() private redisClient: Redis,
   ) {}
 
-  async createGame(name: string): Promise&lt;IGame&gt; {
-    const created &#x3D; new this.gameModel({ name });
-    return created.save();
+  async createGame(name: string): Promise&lt;Game&gt; {
+    const newGame &#x3D; this.gameRepository.create({ name })
+    const result &#x3D; await this.gameRepository.save(newGame)
+    return result
   }
 
-  async getGame(id: string): Promise&lt;IGame&gt; {
-    return this.gameModel.findById(id);
+  async updateGame(id: number, game: Game): Promise&lt;void&gt; {
+    await this.gameRepository.update(id, game)
+    return
   }
 
-  async getGameWithCache(id: string): Promise&lt;IGame&gt; {
-    const cacheKey &#x3D; &#x60;game_data:${id}&#x60;;
-    const cache &#x3D; await this.redisClient.get(cacheKey);
+  async getGame(id: number): Promise&lt;Game&gt; {
+    return this.gameRepository.findOne(id)
+  }
+
+  async deleteGame(id: number): Promise&lt;void&gt; {
+    await this.gameRepository.softDelete(id)
+    return
+  }
+
+  async getGameWithCache(id: number): Promise&lt;Game&gt; {
+    const cacheKey &#x3D; &#x60;game_data:${id}&#x60;
+    const cache &#x3D; await this.redisClient.get(cacheKey)
     if (cache) {
-      return JSON.parse(cache);
+      return JSON.parse(cache)
     }
-    let result;
+    let result
     if (!cache) {
-      result &#x3D; await this.gameModel.findById(id);
-      await this.redisClient.set(cacheKey, JSON.stringify(result));
+      result &#x3D; await this.gameRepository.findOne(id)
+      await this.redisClient.set(cacheKey, JSON.stringify(result))
     }
-    return result;
+    return result
   }
 }
 </code></pre>

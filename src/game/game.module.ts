@@ -1,11 +1,12 @@
-import { Module, CacheModule } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { MongooseModule } from '@nestjs/mongoose';
+import { Module, CacheModule } from '@nestjs/common'
+import { ConfigModule, ConfigService } from '@nestjs/config'
+import { TypeOrmModule } from '@nestjs/typeorm'
 
-import { GameService } from './game.service';
-import { Game, GameSchema } from './schemas';
-import { GameAdminController } from './gameAdmin.controller';
-import { GameController } from './game.controller';
+import { GameService } from './game.service'
+import { GameAdminController } from './gameAdmin.controller'
+import { GameController } from './game.controller'
+
+import { Game } from './entities/game.entity'
 
 @Module({
   imports: [
@@ -16,7 +17,7 @@ import { GameController } from './game.controller';
       }),
       inject: [ConfigService],
     }),
-    MongooseModule.forFeature([{ name: Game.name, schema: GameSchema }]),
+    TypeOrmModule.forFeature([Game]),
   ],
   controllers: [GameAdminController, GameController],
   providers: [GameService],

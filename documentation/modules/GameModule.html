@@ -154,14 +154,15 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Module, CacheModule } from &#x27;@nestjs/common&#x27;;
-import { ConfigModule, ConfigService } from &#x27;@nestjs/config&#x27;;
-import { MongooseModule } from &#x27;@nestjs/mongoose&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Module, CacheModule } from &#x27;@nestjs/common&#x27;
+import { ConfigModule, ConfigService } from &#x27;@nestjs/config&#x27;
+import { TypeOrmModule } from &#x27;@nestjs/typeorm&#x27;
 
-import { GameService } from &#x27;./game.service&#x27;;
-import { Game, GameSchema } from &#x27;./schemas&#x27;;
-import { GameAdminController } from &#x27;./gameAdmin.controller&#x27;;
-import { GameController } from &#x27;./game.controller&#x27;;
+import { GameService } from &#x27;./game.service&#x27;
+import { GameAdminController } from &#x27;./gameAdmin.controller&#x27;
+import { GameController } from &#x27;./game.controller&#x27;
+
+import { Game } from &#x27;./entities/game.entity&#x27;
 
 @Module({
   imports: [
@@ -172,7 +173,7 @@ import { GameController } from &#x27;./game.controller&#x27;;
       }),
       inject: [ConfigService],
     }),
-    MongooseModule.forFeature([{ name: Game.name, schema: GameSchema }]),
+    TypeOrmModule.forFeature([Game]),
   ],
   controllers: [GameAdminController, GameController],
   providers: [GameService],

@@ -99,13 +99,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/GameModule.html" data-type="entity-link">GameModule</a>
                                     <li class="chapter inner">
                                         <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                            'data-target="#controllers-links-module-GameModule-a145732903cf694afff7d1d6a27b1891"' : 'data-target="#xs-controllers-links-module-GameModule-a145732903cf694afff7d1d6a27b1891"' }>
+                                            'data-target="#controllers-links-module-GameModule-5a1d79cddac88898137a2bbfa61996a0"' : 'data-target="#xs-controllers-links-module-GameModule-5a1d79cddac88898137a2bbfa61996a0"' }>
                                             <span class="icon ion-md-swap"></span>
                                             <span>Controllers</span>
                                             <span class="icon ion-ios-arrow-down"></span>
                                         </div>
-                                        <ul class="links collapse" ${ isNormalMode ? 'id="controllers-links-module-GameModule-a145732903cf694afff7d1d6a27b1891"' :
-                                            'id="xs-controllers-links-module-GameModule-a145732903cf694afff7d1d6a27b1891"' }>
+                                        <ul class="links collapse" ${ isNormalMode ? 'id="controllers-links-module-GameModule-5a1d79cddac88898137a2bbfa61996a0"' :
+                                            'id="xs-controllers-links-module-GameModule-5a1d79cddac88898137a2bbfa61996a0"' }>
                                             <li class="link">
                                                 <a href="controllers/GameAdminController.html"
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">GameAdminController</a>
@@ -118,13 +118,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                     </li>
                                 <li class="chapter inner">
                                     <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                        'data-target="#injectables-links-module-GameModule-a145732903cf694afff7d1d6a27b1891"' : 'data-target="#xs-injectables-links-module-GameModule-a145732903cf694afff7d1d6a27b1891"' }>
+                                        'data-target="#injectables-links-module-GameModule-5a1d79cddac88898137a2bbfa61996a0"' : 'data-target="#xs-injectables-links-module-GameModule-5a1d79cddac88898137a2bbfa61996a0"' }>
                                         <span class="icon ion-md-arrow-round-down"></span>
                                         <span>Injectables</span>
                                         <span class="icon ion-ios-arrow-down"></span>
                                     </div>
-                                    <ul class="links collapse" ${ isNormalMode ? 'id="injectables-links-module-GameModule-a145732903cf694afff7d1d6a27b1891"' :
-                                        'id="xs-injectables-links-module-GameModule-a145732903cf694afff7d1d6a27b1891"' }>
+                                    <ul class="links collapse" ${ isNormalMode ? 'id="injectables-links-module-GameModule-5a1d79cddac88898137a2bbfa61996a0"' :
+                                        'id="xs-injectables-links-module-GameModule-5a1d79cddac88898137a2bbfa61996a0"' }>
                                         <li class="link">
                                             <a href="injectables/GameService.html"
                                                 data-type="entity-link" data-context="sub-entity" data-context-id="modules" }>GameService</a>
@@ -170,6 +170,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                             <li class="link">
                                 <a href="modules/HeroSVCModule.html" data-type="entity-link">HeroSVCModule</a>
+                            </li>
+                            <li class="link">
+                                <a href="modules/OperationLogModule.html" data-type="entity-link">OperationLogModule</a>
                             </li>
                             <li class="link">
                                 <a href="modules/RedisModule.html" data-type="entity-link">RedisModule</a>
@@ -294,9 +297,6 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 </li>
                                 <li class="link">
                                     <a href="injectables/MemberStrategy.html" data-type="entity-link">MemberStrategy</a>
-                                </li>
-                                <li class="link">
-                                    <a href="injectables/ParseObjectIdPipe.html" data-type="entity-link">ParseObjectIdPipe</a>
                                 </li>
                                 <li class="link">
                                     <a href="injectables/PointsService.html" data-type="entity-link">PointsService</a>
