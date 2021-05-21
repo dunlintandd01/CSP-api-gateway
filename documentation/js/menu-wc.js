@@ -96,6 +96,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 </li>
                             </li>
                             <li class="link">
+                                <a href="modules/CoreModule.html" data-type="entity-link">CoreModule</a>
+                            </li>
+                            <li class="link">
                                 <a href="modules/GameModule.html" data-type="entity-link">GameModule</a>
                                     <li class="chapter inner">
                                         <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
@@ -151,34 +154,19 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                     </li>
                             </li>
                             <li class="link">
-                                <a href="modules/HeroModule.html" data-type="entity-link">HeroModule</a>
-                                    <li class="chapter inner">
-                                        <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                            'data-target="#controllers-links-module-HeroModule-e4ac14431f5b4230d6f18997b9abbf60"' : 'data-target="#xs-controllers-links-module-HeroModule-e4ac14431f5b4230d6f18997b9abbf60"' }>
-                                            <span class="icon ion-md-swap"></span>
-                                            <span>Controllers</span>
-                                            <span class="icon ion-ios-arrow-down"></span>
-                                        </div>
-                                        <ul class="links collapse" ${ isNormalMode ? 'id="controllers-links-module-HeroModule-e4ac14431f5b4230d6f18997b9abbf60"' :
-                                            'id="xs-controllers-links-module-HeroModule-e4ac14431f5b4230d6f18997b9abbf60"' }>
-                                            <li class="link">
-                                                <a href="controllers/HeroController.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">HeroController</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                            </li>
-                            <li class="link">
-                                <a href="modules/HeroSVCModule.html" data-type="entity-link">HeroSVCModule</a>
+                                <a href="modules/LotteryModule.html" data-type="entity-link">LotteryModule</a>
                             </li>
                             <li class="link">
                                 <a href="modules/OperationLogModule.html" data-type="entity-link">OperationLogModule</a>
                             </li>
                             <li class="link">
-                                <a href="modules/RedisModule.html" data-type="entity-link">RedisModule</a>
+                                <a href="modules/PlayerModule.html" data-type="entity-link">PlayerModule</a>
                             </li>
                             <li class="link">
-                                <a href="modules/SVCAppModule.html" data-type="entity-link">SVCAppModule</a>
+                                <a href="modules/QuizModule.html" data-type="entity-link">QuizModule</a>
+                            </li>
+                            <li class="link">
+                                <a href="modules/RedisModule.html" data-type="entity-link">RedisModule</a>
                             </li>
                             <li class="link">
                                 <a href="modules/ThirdPartyModule.html" data-type="entity-link">ThirdPartyModule</a>
@@ -224,12 +212,6 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <li class="link">
                                     <a href="controllers/HealthController.html" data-type="entity-link">HealthController</a>
                                 </li>
-                                <li class="link">
-                                    <a href="controllers/HeroController.html" data-type="entity-link">HeroController</a>
-                                </li>
-                                <li class="link">
-                                    <a href="controllers/HeroesService.html" data-type="entity-link">HeroesService</a>
-                                </li>
                             </ul>
                         </li>
                     <li class="chapter">
@@ -250,12 +232,6 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="classes/CreateGameReq.html" data-type="entity-link">CreateGameReq</a>
                             </li>
                             <li class="link">
-                                <a href="classes/CreateHeroRequestDto.html" data-type="entity-link">CreateHeroRequestDto</a>
-                            </li>
-                            <li class="link">
-                                <a href="classes/CreateHeroResponseDto.html" data-type="entity-link">CreateHeroResponseDto</a>
-                            </li>
-                            <li class="link">
                                 <a href="classes/EventBusSDKService.html" data-type="entity-link">EventBusSDKService</a>
                             </li>
                             <li class="link">
@@ -265,7 +241,7 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="classes/GameDto.html" data-type="entity-link">GameDto</a>
                             </li>
                             <li class="link">
-                                <a href="classes/HeroError.html" data-type="entity-link">HeroError</a>
+                                <a href="classes/Operation.html" data-type="entity-link">Operation</a>
                             </li>
                         </ul>
                     </li>
@@ -318,43 +294,7 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         </div>
                         <ul class="links collapse " ${ isNormalMode ? ' id="interfaces-links"' : 'id="xs-interfaces-links"' }>
                             <li class="link">
-                                <a href="interfaces/ANSWER_DISPLAY_MODE.html" data-type="entity-link">ANSWER_DISPLAY_MODE</a>
-                            </li>
-                            <li class="link">
-                                <a href="interfaces/AUTH_MODE.html" data-type="entity-link">AUTH_MODE</a>
-                            </li>
-                            <li class="link">
-                                <a href="interfaces/GAME_STATUS.html" data-type="entity-link">GAME_STATUS</a>
-                            </li>
-                            <li class="link">
-                                <a href="interfaces/GAME_TYPE.html" data-type="entity-link">GAME_TYPE</a>
-                            </li>
-                            <li class="link">
-                                <a href="interfaces/Hero.html" data-type="entity-link">Hero</a>
-                            </li>
-                            <li class="link">
-                                <a href="interfaces/Hero-1.html" data-type="entity-link">Hero</a>
-                            </li>
-                            <li class="link">
-                                <a href="interfaces/Hero-2.html" data-type="entity-link">Hero</a>
-                            </li>
-                            <li class="link">
-                                <a href="interfaces/HeroById.html" data-type="entity-link">HeroById</a>
-                            </li>
-                            <li class="link">
-                                <a href="interfaces/HeroesService.html" data-type="entity-link">HeroesService</a>
-                            </li>
-                            <li class="link">
-                                <a href="interfaces/IGame.html" data-type="entity-link">IGame</a>
-                            </li>
-                            <li class="link">
-                                <a href="interfaces/QUESTION_ORDER_MODE.html" data-type="entity-link">QUESTION_ORDER_MODE</a>
-                            </li>
-                            <li class="link">
                                 <a href="interfaces/RedisModuleAsyncOptions.html" data-type="entity-link">RedisModuleAsyncOptions</a>
-                            </li>
-                            <li class="link">
-                                <a href="interfaces/USER_AGENT_LIMIT_MODE.html" data-type="entity-link">USER_AGENT_LIMIT_MODE</a>
                             </li>
                         </ul>
                     </li>
@@ -366,6 +306,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             <span class="icon ion-ios-arrow-down"></span>
                         </div>
                         <ul class="links collapse " ${ isNormalMode ? 'id="miscellaneous-links"' : 'id="xs-miscellaneous-links"' }>
+                            <li class="link">
+                                <a href="miscellaneous/enumerations.html" data-type="entity-link">Enums</a>
+                            </li>
                             <li class="link">
                                 <a href="miscellaneous/functions.html" data-type="entity-link">Functions</a>
                             </li>
