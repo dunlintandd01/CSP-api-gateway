@@ -4,8 +4,9 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 
 import { CoreModule } from './core/core.module'
 import { AuthModule } from './auth/auth.module'
+import { CampaignModule } from './campaign/campaign.module'
 import { GameModule } from './game/game.module'
-import { LotteryModule } from './lottery/lottery.module'
+import { RewardModule } from './reward/reward.module'
 import { PlayerModule } from './player/player.module'
 import { QuizModule } from './quiz/quiz.module'
 
@@ -27,8 +28,9 @@ import { QuizModule } from './quiz/quiz.module'
       inject: [ConfigService],
     }),
     AuthModule,
+    CampaignModule,
     GameModule,
-    LotteryModule,
+    RewardModule,
     PlayerModule,
     QuizModule,
   ],
