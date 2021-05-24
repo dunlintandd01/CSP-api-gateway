@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Repository } from 'typeorm'
+import { Repository, Like } from 'typeorm'
 import { Redis } from 'ioredis'
 
 import { Game } from './entities/game.entity'
@@ -27,6 +27,24 @@ export class GameService {
 
   async getGame(id: number): Promise<Game> {
     return this.gameRepository.findOne(id)
+  }
+
+  async getGameList(
+    search: string,
+    page: number,
+    pageSize: number,
+  ): Promise<Game[]> {
+    const result = await this.gameRepository.find({
+      where: {
+        name: Like('%out #%'),
+      },
+      skip: (page - 1) * pageSize,
+      take: pageSize,
+      order: {
+        createdAt: 'DESC',
+      },
+    })
+    return result
   }
 
   async deleteGame(id: number): Promise<void> {

@@ -6,6 +6,7 @@ import {
   Delete,
   Body,
   Param,
+  Query,
   UseGuards,
 } from '@nestjs/common'
 import { ApiTags, ApiOkResponse, ApiBearerAuth } from '@nestjs/swagger'
@@ -13,7 +14,7 @@ import { ApiTags, ApiOkResponse, ApiBearerAuth } from '@nestjs/swagger'
 import { AdminAuthGuard } from '../auth/guards/admin.guard'
 
 import { GameService } from './game.service'
-import { CreateGameReq, GameDto } from './dtos'
+import { CreateGameReq, GameDto, GetGameListReq } from './dtos'
 import { Game } from './entities'
 
 @Controller('admin/game')
@@ -22,6 +23,20 @@ import { Game } from './entities'
 @ApiBearerAuth('admin')
 export class GameAdminController {
   constructor(private gameService: GameService) {}
+
+  @Get('/')
+  @ApiOkResponse({
+    type: GameDto,
+    isArray: true,
+  })
+  async getGameList(@Query() query: GetGameListReq): Promise<GameDto[]> {
+    const result = await this.gameService.getGameList(
+      query.search,
+      query.page,
+      query.pageSize,
+    )
+    return result
+  }
 
   @Get('/:id')
   @ApiOkResponse({
