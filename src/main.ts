@@ -5,9 +5,9 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'
 import * as helmet from 'helmet'
 
 import { AppModule } from './app.module'
-import { ValidationPipe } from './core/middlewares/validation.pipe'
 import { AllExceptionFilter } from './core/middlewares/exception.filter'
 import { LoggingInterceptor } from './core/middlewares/logger.interceptor'
+import { ValidationPipe } from './core/middlewares/validation.pipe'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
@@ -24,7 +24,7 @@ async function bootstrap() {
   SwaggerModule.setup('docs', app, document)
 
   app.useGlobalInterceptors(new LoggingInterceptor())
-  app.useGlobalPipes(new ValidationPipe())
+  app.useGlobalPipes(ValidationPipe)
   app.useGlobalFilters(new AllExceptionFilter())
   app.use(helmet())
   app.enableCors({ origin: '*' }) // TODO: whilelist
