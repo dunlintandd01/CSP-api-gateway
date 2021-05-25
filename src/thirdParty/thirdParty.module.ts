@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common'
+import { Module, HttpModule } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { PointsService } from './points.service'
 import { EventBusSDKService } from './eventBusSDK.service'
@@ -7,7 +7,7 @@ import { S3Service } from './s3.service'
 import { CouponService } from './coupon.service'
 
 @Module({
-  imports: [ConfigModule],
+  imports: [ConfigModule, HttpModule],
   providers: [
     ...eventBusSDKProviders,
     PointsService,

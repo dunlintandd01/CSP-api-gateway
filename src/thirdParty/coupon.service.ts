@@ -1,7 +1,6 @@
-import { Injectable } from '@nestjs/common'
+import { HttpService, Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import jwt from 'jsonwebtoken'
-import axios from 'axios'
 
 @Injectable()
 export class CouponService {
@@ -10,7 +9,10 @@ export class CouponService {
   secret: string
   jwtToken: string
 
-  constructor(private configService: ConfigService) {
+  constructor(
+    private configService: ConfigService,
+    private httpService: HttpService,
+  ) {
     this.payload = {
       clientId: this.configService.get<string>('COUPON_REDEEM_CLIENT_ID'),
     }
@@ -31,13 +33,15 @@ export class CouponService {
         .get<string>('COUPON_REDEEM_URL')
         .replace('{skuId}', skuId)
       const params = { userAccountId: userAccountId }
-      const result = await axios.post(url, params, {
-        headers: {
-          'HK01-Auth-Schema': 'API',
-          Authorization: `Bearer ${this.jwtToken}`,
-        },
-        timeout: 10000,
-      })
+      const result = await this.httpService
+        .post(url, params, {
+          headers: {
+            'HK01-Auth-Schema': 'API',
+            Authorization: `Bearer ${this.jwtToken}`,
+          },
+          timeout: 10000,
+        })
+        .toPromise()
       return result.data
     } catch (error) {
       //TODO: integrate error
