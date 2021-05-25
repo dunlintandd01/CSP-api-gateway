@@ -1,13 +1,14 @@
 import { Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
-import * as AWS from 'aws-sdk'
+import AWS from 'aws-sdk/global'
+import S3 from 'aws-sdk/clients/s3'
 import * as R from 'ramda'
 import path from 'path'
-import uuid from 'uuid/v4'
+import uuid from 'uuid'
 
 @Injectable()
 export class S3Service {
-  s3: AWS.S3.Types
+  s3: S3
   s3Setting: Record<string, string>
 
   constructor(private configService: ConfigService) {
@@ -16,7 +17,7 @@ export class S3Service {
       secretAccessKey: this.configService.get<string>('S3_CLIENT_SECRET'),
       region: this.configService.get<string>('S3_REGION'),
     })
-    this.s3 = new AWS.S3()
+    this.s3 = new S3()
     this.s3Setting = Object.freeze({
       Bucket: this.configService.get<string>('S3_BUCKET'),
     })
@@ -66,7 +67,7 @@ export class S3Service {
     }
   }
 
-  async get(key: string): Promise<AWS.S3.Types.GetObjectAclOutput> {
+  async get(key: string): Promise<S3.GetObjectAclOutput> {
     await this.getObjectHead(key)
     const params = this.getS3Param(key)
     try {
@@ -79,14 +80,14 @@ export class S3Service {
 
   genKeyByFilename(filename: string): string {
     const ext = path.extname(filename)
-    let key = uuid() + ext
+    let key = uuid.v4() + ext
     const folder1 = key.substr(0, 1)
     const folder2 = key.substr(1, 1)
     key = `${folder1}/${folder2}/${key}`
     return key
   }
 
-  async getObjectHead(key: string): Promise<AWS.S3.Types.HeadObjectOutput> {
+  async getObjectHead(key: string): Promise<S3.HeadObjectOutput> {
     const params = this.getS3Param(key)
     try {
       return this.s3.headObject(params).promise()
