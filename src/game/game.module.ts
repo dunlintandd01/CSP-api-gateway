@@ -2,11 +2,18 @@ import { Module, CacheModule } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 
-import { GameService } from './game.service'
-import { GameAdminController } from './gameAdmin.controller'
-import { GameController } from './game.controller'
+import { RewardModule } from '../reward'
 
-import { Game } from './entities/game.entity'
+import { GameService } from './game.service'
+import { GameAdminController } from './controllers/gameAdmin.controller'
+import { GameController } from './controllers/game.controller'
+import {
+  Game,
+  GamePage,
+  Theme,
+  LandingPage,
+  ResultPageModule,
+} from './entities'
 
 @Module({
   imports: [
@@ -17,7 +24,14 @@ import { Game } from './entities/game.entity'
       }),
       inject: [ConfigService],
     }),
-    TypeOrmModule.forFeature([Game]),
+    TypeOrmModule.forFeature([
+      Game,
+      GamePage,
+      Theme,
+      LandingPage,
+      ResultPageModule,
+    ]),
+    RewardModule,
   ],
   controllers: [GameAdminController, GameController],
   providers: [GameService],

@@ -8,14 +8,16 @@ import {
   Param,
   Query,
   UseGuards,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common'
 import { ApiTags, ApiOkResponse, ApiBearerAuth } from '@nestjs/swagger'
 
-import { AdminAuthGuard } from '../auth/guards/admin.guard'
+import { AdminAuthGuard } from '../../auth/guards/admin.guard'
 
-import { GameService } from './game.service'
-import { CreateGameReq, GameDto, GetGameListReq } from './dtos'
-import { Game } from './entities'
+import { GameService } from '../game.service'
+import { SaveGameReq, GetGameListReq } from '../dtos'
+import { Game } from '../entities'
 
 @Controller('admin/game')
 @ApiTags('game')
@@ -26,10 +28,10 @@ export class GameAdminController {
 
   @Get('/')
   @ApiOkResponse({
-    type: GameDto,
+    type: Game,
     isArray: true,
   })
-  async getGameList(@Query() query: GetGameListReq): Promise<GameDto[]> {
+  async getGameList(@Query() query: GetGameListReq): Promise<Game[]> {
     const result = await this.gameService.getGameList(
       query.search,
       query.page,
@@ -40,18 +42,21 @@ export class GameAdminController {
 
   @Get('/:id')
   @ApiOkResponse({
-    type: GameDto,
+    type: Game,
   })
-  async getGame(@Param('id') id: number): Promise<GameDto> {
+  async getGame(@Param('id') id: number): Promise<Game> {
     const result = await this.gameService.getGame(id)
+    if (!result) {
+      throw new HttpException('game not found', HttpStatus.NOT_FOUND)
+    }
     return result
   }
 
   @Post('/')
   @ApiOkResponse({
-    type: GameDto,
+    type: Game,
   })
-  async createGame(@Body() body: CreateGameReq): Promise<GameDto> {
+  async createGame(@Body() body: SaveGameReq): Promise<Game> {
     const { name } = body
     const result = await this.gameService.createGame(name)
     return result
@@ -59,11 +64,11 @@ export class GameAdminController {
 
   @Put('/:id')
   @ApiOkResponse({
-    type: GameDto,
+    type: Game,
   })
   async updateGame(
     @Param('id') id: number,
-    @Body() body: CreateGameReq,
+    @Body() body: SaveGameReq,
   ): Promise<void> {
     await this.gameService.updateGame(id, body as Game)
     return
@@ -71,7 +76,7 @@ export class GameAdminController {
 
   @Delete('/:id')
   @ApiOkResponse({
-    type: GameDto,
+    type: Game,
   })
   async deleteGame(@Param('id') id: number): Promise<void> {
     await this.gameService.deleteGame(id)

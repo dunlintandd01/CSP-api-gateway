@@ -1,22 +1,35 @@
-import { Injectable } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository, Like } from 'typeorm'
 import { Redis } from 'ioredis'
 
-import { Game } from './entities/game.entity'
+import { Game, GamePage } from './entities'
 import { InjectRedis } from '../core/redis'
+import { RewardService, Reward } from '../reward'
 
 @Injectable()
 export class GameService {
   constructor(
     @InjectRepository(Game)
     private gameRepository: Repository<Game>,
+    @InjectRepository(GamePage)
+    private pageRepository: Repository<GamePage>,
     @InjectRedis() private redisClient: Redis,
+    private readonly rewardService: RewardService,
   ) {}
 
-  async createGame(name: string): Promise<Game> {
+  async createGame(
+    name: string,
+    relations?: { pages?: GamePage[]; rewards?: Reward[] },
+  ): Promise<Game> {
     const newGame = this.gameRepository.create({ name })
     const result = await this.gameRepository.save(newGame)
+    if (relations.pages) {
+      await this.pageRepository.save(relations.pages)
+    }
+    if (relations.rewards) {
+      await this.rewardService.batchSave(relations.rewards)
+    }
     return result
   }
 
@@ -26,7 +39,17 @@ export class GameService {
   }
 
   async getGame(id: number): Promise<Game> {
-    return this.gameRepository.findOne(id)
+    const result = await this.gameRepository
+      .createQueryBuilder('game')
+      .select('game.name')
+      .select('page.id')
+      .where('game.id = :id', { id })
+      .leftJoinAndSelect('game.pages', 'page')
+      .orderBy({
+        'page.rank': 'ASC',
+      })
+      .getOne()
+    return result
   }
 
   async getGameList(
@@ -36,7 +59,7 @@ export class GameService {
   ): Promise<Game[]> {
     const result = await this.gameRepository.find({
       where: {
-        name: Like('%out #%'),
+        name: Like(`%${search}%`),
       },
       skip: (page - 1) * pageSize,
       take: pageSize,

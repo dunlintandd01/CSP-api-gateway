@@ -9,8 +9,8 @@ import {
 } from '@nestjs/common'
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger'
 
-import { GameService } from './game.service'
-import { GameDto } from './dtos'
+import { GameService } from '../game.service'
+import { Game } from '../entities'
 
 @Controller('game')
 @ApiTags('game')
@@ -19,10 +19,10 @@ export class GameController {
 
   @UseInterceptors(CacheInterceptor)
   @ApiOkResponse({
-    type: GameDto,
+    type: Game,
   })
   @Get('/:id')
-  async getGame(@Param('id') id: number): Promise<GameDto> {
+  async getGame(@Param('id') id: number): Promise<Game> {
     const result = await this.gameService.getGameWithCache(id)
     if (!result) {
       throw new HttpException('Game Not Found', HttpStatus.NOT_FOUND)

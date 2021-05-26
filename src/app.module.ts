@@ -6,7 +6,6 @@ import { CoreModule } from './core/core.module'
 import { AuthModule } from './auth/auth.module'
 import { CampaignModule } from './campaign/campaign.module'
 import { GameModule } from './game/game.module'
-import { RewardModule } from './reward/reward.module'
 import { PlayerModule } from './player/player.module'
 import { QuizModule } from './quiz/quiz.module'
 
@@ -23,14 +22,14 @@ import { QuizModule } from './quiz/quiz.module'
         password: configService.get<string>('MYSQL_PASSWORD'),
         database: configService.get<string>('MYSQL_DATABASE'),
         autoLoadEntities: true,
-        synchronize: true,
+        // synchronize: true,
+        logging: true,
       }),
       inject: [ConfigService],
     }),
     AuthModule,
     CampaignModule,
     GameModule,
-    RewardModule,
     PlayerModule,
     QuizModule,
   ],

@@ -1,0 +1,10 @@
+export enum REWARD_TYPE {
+  POINTS = 'POINTS',
+  COUPON = 'COUPON',
+}
+
+export enum STOCK_TYPE {
+  LIMITED = 'LIMITED',
+  UNLIMITED = 'UNLIMITED',
+  LAST_REWARD = 'LAST_REWARD',
+}

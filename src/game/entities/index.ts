@@ -1,1 +1,5 @@
 export * from './game.entity'
+export * from './gamePage.entity'
+export * from './theme.entity'
+export * from './landingPage.entity'
+export * from './resultPageModule.entity'
