@@ -56,7 +56,10 @@ export class Game extends Operation {
   image: string
 
   @IsEnum(GAME_STATUS_ENUM)
-  @ApiProperty()
+  @ApiProperty({
+    enum: Object.keys(GAME_STATUS_ENUM),
+    default: GAME_STATUS_ENUM.DRAFT,
+  })
   @Column({
     type: 'enum',
     default: GAME_STATUS_ENUM.DRAFT,
@@ -76,7 +79,10 @@ export class Game extends Operation {
   endTime: Date
 
   @IsEnum(GAME_PLAYER_AGENT_MODE)
-  @ApiProperty()
+  @ApiProperty({
+    enum: Object.keys(GAME_PLAYER_AGENT_MODE),
+    default: GAME_PLAYER_AGENT_MODE.NONE,
+  })
   @Column({
     type: 'enum',
     default: GAME_PLAYER_AGENT_MODE.NONE,
@@ -85,7 +91,10 @@ export class Game extends Operation {
   playerAgentMode: GAME_PLAYER_AGENT_MODE
 
   @IsEnum(GAME_PLAYER_AUTH_MODE)
-  @ApiProperty()
+  @ApiProperty({
+    enum: Object.keys(GAME_PLAYER_AUTH_MODE),
+    default: GAME_PLAYER_AUTH_MODE.NONE,
+  })
   @Column({
     type: 'enum',
     default: GAME_PLAYER_AUTH_MODE.NONE,
@@ -99,7 +108,10 @@ export class Game extends Operation {
   maxAttempCount: number
 
   @IsEnum(GAME_REWARD_TYPE)
-  @ApiProperty()
+  @ApiProperty({
+    default: GAME_REWARD_TYPE.RANK,
+    enum: Object.keys(GAME_REWARD_TYPE),
+  })
   @Column({
     type: 'enum',
     default: GAME_REWARD_TYPE.RANK,
@@ -147,7 +159,6 @@ export class Game extends Operation {
   theme: Theme
 
   @OneToMany(() => GamePage, (page) => page.game)
-  @ApiProperty({ type: [GamePage] })
   pages: GamePage[]
 
   @DeleteDateColumn()

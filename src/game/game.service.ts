@@ -1,8 +1,10 @@
-import { Inject, Injectable } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository, Like } from 'typeorm'
 import { Redis } from 'ioredis'
+import * as R from 'ramda'
 
+import { SaveGameReq } from './dtos'
 import { Game, GamePage } from './entities'
 import { InjectRedis } from '../core/redis'
 import { RewardService, Reward } from '../reward'
@@ -18,37 +20,38 @@ export class GameService {
     private readonly rewardService: RewardService,
   ) {}
 
-  async createGame(
-    name: string,
-    relations?: { pages?: GamePage[]; rewards?: Reward[] },
-  ): Promise<Game> {
-    const newGame = this.gameRepository.create({ name })
-    const result = await this.gameRepository.save(newGame)
-    if (relations.pages) {
-      await this.pageRepository.save(relations.pages)
+  async createGame(data: SaveGameReq, operator: string): Promise<Game> {
+    const pages = []
+    for (let pageData of data.pages) {
+      let page = new GamePage()
+      page = R.merge(pageData, page)
+      page.createdBy = operator
+      page.updatedBy = operator
+      await this.pageRepository.save(page)
+      pages.push(page)
     }
-    if (relations.rewards) {
-      await this.rewardService.batchSave(relations.rewards)
-    }
+    let game = new Game()
+    game = R.merge(game, R.omit(['pages'], data))
+    game.createdBy = operator
+    game.updatedBy = operator
+    game.pages = pages
+    const result = await this.gameRepository.save(game)
+
     return result
   }
 
-  async updateGame(id: number, game: Game): Promise<void> {
+  async updateGame(id: number, data: SaveGameReq): Promise<void> {
+    let game = new Game()
+    game = Object.assign(game, data)
     await this.gameRepository.update(id, game)
     return
   }
 
   async getGame(id: number): Promise<Game> {
-    const result = await this.gameRepository
-      .createQueryBuilder('game')
-      .select('game.name')
-      .select('page.id')
-      .where('game.id = :id', { id })
-      .leftJoinAndSelect('game.pages', 'page')
-      .orderBy({
-        'page.rank': 'ASC',
-      })
-      .getOne()
+    const result = await this.gameRepository.findOne({
+      relations: ['pages'],
+      where: { id },
+    })
     return result
   }
 

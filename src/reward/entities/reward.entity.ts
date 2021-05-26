@@ -32,7 +32,8 @@ export class Reward extends Operation {
 
   @Column({
     type: 'decimal',
-    precision: 7,
+    precision: 10,
+    scale: 7,
   })
   probability: number
 

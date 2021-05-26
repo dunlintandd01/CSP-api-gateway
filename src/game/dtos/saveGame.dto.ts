@@ -1,5 +1,14 @@
-import { OmitType } from '@nestjs/swagger'
-import { Game } from '../entities/game.entity'
+import { OmitType, ApiProperty } from '@nestjs/swagger'
+
+import { Game, GamePage } from '../entities'
+
+export class SavePages extends OmitType(GamePage, [
+  'id',
+  'createdAt',
+  'createdBy',
+  'updatedAt',
+  'updatedBy',
+] as const) {}
 
 export class SaveGameReq extends OmitType(Game, [
   'id',
@@ -7,4 +16,8 @@ export class SaveGameReq extends OmitType(Game, [
   'createdBy',
   'updatedAt',
   'updatedBy',
-] as const) {}
+  'pages',
+] as const) {
+  @ApiProperty({ type: [SavePages] })
+  pages: SavePages[]
+}

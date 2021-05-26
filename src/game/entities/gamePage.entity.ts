@@ -6,13 +6,7 @@ import {
   DeleteDateColumn,
   ManyToOne,
 } from 'typeorm'
-import {
-  IsInt,
-  IsBoolean,
-  IsString,
-  IsEnum,
-  IsDateString,
-} from 'class-validator'
+import { IsInt, IsEnum } from 'class-validator'
 import { ApiProperty } from '@nestjs/swagger'
 
 import { Operation } from '../../common'
@@ -31,7 +25,7 @@ export class GamePage extends Operation {
   game: number
 
   @IsEnum(PAGE_TYPE)
-  @ApiProperty()
+  @ApiProperty({ enum: Object.keys(PAGE_TYPE) })
   @Column({ type: 'enum', enum: PAGE_TYPE })
   pageType: PAGE_TYPE
 

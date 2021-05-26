@@ -10,6 +10,7 @@ import {
   UseGuards,
   HttpException,
   HttpStatus,
+  Request,
 } from '@nestjs/common'
 import { ApiTags, ApiOkResponse, ApiBearerAuth } from '@nestjs/swagger'
 
@@ -21,7 +22,7 @@ import { Game } from '../entities'
 
 @Controller('admin/game')
 @ApiTags('game')
-// @UseGuards(AdminAuthGuard)
+@UseGuards(AdminAuthGuard)
 @ApiBearerAuth('admin')
 export class GameAdminController {
   constructor(private gameService: GameService) {}
@@ -46,6 +47,7 @@ export class GameAdminController {
   })
   async getGame(@Param('id') id: number): Promise<Game> {
     const result = await this.gameService.getGame(id)
+    console.log(result)
     if (!result) {
       throw new HttpException('game not found', HttpStatus.NOT_FOUND)
     }
@@ -56,9 +58,8 @@ export class GameAdminController {
   @ApiOkResponse({
     type: Game,
   })
-  async createGame(@Body() body: SaveGameReq): Promise<Game> {
-    const { name } = body
-    const result = await this.gameService.createGame(name)
+  async createGame(@Body() body: SaveGameReq, @Request() req): Promise<Game> {
+    const result = await this.gameService.createGame(body, req.user.username)
     return result
   }
 
@@ -70,7 +71,7 @@ export class GameAdminController {
     @Param('id') id: number,
     @Body() body: SaveGameReq,
   ): Promise<void> {
-    await this.gameService.updateGame(id, body as Game)
+    await this.gameService.updateGame(id, body)
     return
   }
 
