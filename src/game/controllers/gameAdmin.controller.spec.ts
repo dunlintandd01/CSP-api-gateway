@@ -1,19 +1,29 @@
 import { Test } from '@nestjs/testing'
 import { getRepositoryToken } from '@nestjs/typeorm'
+import * as R from 'ramda'
 
 import { getRedisToken } from '../../core/redis'
 import { GameAdminController } from './gameAdmin.controller'
 import { GameService } from '../game.service'
 import { RewardService, Reward } from '../../reward'
 import { Game, GamePage } from '../entities'
+import { REWARD_TYPE, STOCK_TYPE } from '../../reward/interfaces/reward'
 
 describe('Game Admin Controller', () => {
   let controller: GameAdminController
   let rewardService: RewardService
   const fakeID = 123
-  const fakeUser = { username: 'tester', userId: 'u123' }
+  const fakeUserName = 'tester'
+  const fakeUser = { username: fakeUserName, userId: 'u123' }
   const game = { id: fakeID, name: 'testing game' }
   const page = { id: fakeID, gameId: fakeID }
+  const reward = {
+    id: fakeID,
+    rewardType: REWARD_TYPE.POINTS,
+    stockType: STOCK_TYPE.LIMITED,
+    totalAmount: 1,
+    probability: 1,
+  }
 
   class GameRepo {
     static findOne = jest.fn().mockResolvedValue(game)
@@ -27,23 +37,13 @@ describe('Game Admin Controller', () => {
 
   class GamePageRepo {
     static findOne = jest.fn().mockResolvedValue(page)
-    static save = jest.fn().mockImplementation((game) => {
+    static save = jest.fn().mockImplementation((page) => {
       return page.id ? page : Object.assign({ id: fakeID }, page)
     })
-    static create = jest.fn().mockImplementation((game) => page)
     static softDelete = jest.fn().mockResolvedValue(null)
-    static update = jest.fn().mockResolvedValue(null)
   }
 
-  class RewardRepo {
-    static findOne = jest.fn().mockResolvedValue(page)
-    static save = jest.fn().mockImplementation((game) => {
-      return page.id ? page : Object.assign({ id: fakeID }, page)
-    })
-    static create = jest.fn().mockImplementation((game) => page)
-    static softDelete = jest.fn().mockResolvedValue(null)
-    static update = jest.fn().mockResolvedValue(null)
-  }
+  class RewardRepo {}
 
   class RedisClient {
     static get = jest.fn().mockResolvedValue(JSON.stringify(game))
@@ -79,16 +79,15 @@ describe('Game Admin Controller', () => {
     controller = moduleRef.get<GameAdminController>(GameAdminController)
   })
 
-  describe('findOne', () => {
+  describe('find simple game', () => {
     it('should return a game', async () => {
       jest.spyOn(rewardService, 'getRewards').mockResolvedValueOnce([])
       expect(await controller.getGame(fakeID)).toBe(game)
     })
   })
 
-  describe('createOne', () => {
+  describe('create game', () => {
     it('should return a game', async () => {
-      jest.spyOn(rewardService, 'batchSave').mockResolvedValueOnce(null)
       expect(
         await controller.createGame(
           { name: 'create a test game' },
@@ -97,17 +96,68 @@ describe('Game Admin Controller', () => {
       ).toStrictEqual({
         id: fakeID,
         name: 'create a test game',
-        createdBy: 'tester',
-        updatedBy: 'tester',
+        createdBy: fakeUserName,
+        updatedBy: fakeUserName,
       })
     })
   })
 
-  describe('updateOne', () => {
-    it('should return void', async () => {
+  describe('create game with rewards', () => {
+    it('should return a game', async () => {
+      jest
+        .spyOn(rewardService, 'batchSave')
+        .mockResolvedValueOnce([reward as Reward, reward as Reward])
       expect(
-        await controller.updateGame(fakeID, { name: 'update a test game' }),
-      ).toBeUndefined()
+        await controller.createGame(
+          {
+            name: 'create a reward test game',
+            rewards: [R.omit(['id'], reward), R.omit(['id'], reward)],
+          },
+          { user: fakeUser },
+        ),
+      ).toStrictEqual({
+        id: fakeID,
+        name: 'create a reward test game',
+        rewards: [reward, reward],
+        createdBy: fakeUserName,
+        updatedBy: fakeUserName,
+      })
+    })
+  })
+
+  describe('update simple game', () => {
+    it('should return a game', async () => {
+      expect(
+        await controller.updateGame(
+          fakeID,
+          { name: 'update a test game' },
+          { user: fakeUser },
+        ),
+      ).toStrictEqual({
+        id: fakeID,
+        name: 'update a test game',
+        updatedBy: fakeUserName,
+      })
+    })
+  })
+
+  describe('update game with rewards', () => {
+    it('should return a game', async () => {
+      jest
+        .spyOn(rewardService, 'batchSave')
+        .mockResolvedValueOnce([reward as Reward, reward as Reward])
+      expect(
+        await controller.updateGame(
+          fakeID,
+          { name: 'update a test game', rewards: [reward, reward] },
+          { user: fakeUser },
+        ),
+      ).toStrictEqual({
+        id: fakeID,
+        name: 'update a test game',
+        updatedBy: fakeUserName,
+        rewards: [reward, reward],
+      })
     })
   })
 
