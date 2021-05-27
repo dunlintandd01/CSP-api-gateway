@@ -47,7 +47,6 @@ export class GameAdminController {
   })
   async getGame(@Param('id') id: number): Promise<Game> {
     const result = await this.gameService.getGame(id)
-    console.log(result)
     if (!result) {
       throw new HttpException('game not found', HttpStatus.NOT_FOUND)
     }

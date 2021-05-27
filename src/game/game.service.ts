@@ -21,20 +21,24 @@ export class GameService {
   ) {}
 
   async createGame(data: SaveGameReq, operator: string): Promise<Game> {
-    const pages = []
-    for (let pageData of data.pages) {
-      let page = new GamePage()
-      page = R.merge(pageData, page)
-      page.createdBy = operator
-      page.updatedBy = operator
-      await this.pageRepository.save(page)
-      pages.push(page)
-    }
     let game = new Game()
-    game = R.merge(game, R.omit(['pages'], data))
+    game = R.merge(data, game)
     game.createdBy = operator
     game.updatedBy = operator
-    game.pages = pages
+
+    if (data.pages) {
+      const pages = []
+      for (let pageData of data.pages) {
+        let page = new GamePage()
+        page = R.merge(pageData, page)
+        page.createdBy = operator
+        page.updatedBy = operator
+        await this.pageRepository.save(page)
+        pages.push(page)
+      }
+      game.pages = pages
+    }
+
     const result = await this.gameRepository.save(game)
 
     return result

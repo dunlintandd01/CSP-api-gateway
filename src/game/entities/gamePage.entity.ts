@@ -25,7 +25,7 @@ export class GamePage extends Operation {
   game: number
 
   @IsEnum(PAGE_TYPE)
-  @ApiProperty({ enum: Object.keys(PAGE_TYPE) })
+  @ApiProperty({ enum: PAGE_TYPE })
   @Column({ type: 'enum', enum: PAGE_TYPE })
   pageType: PAGE_TYPE
 

@@ -17,6 +17,7 @@ import {
 } from 'class-validator'
 import { ApiProperty } from '@nestjs/swagger'
 
+import { Reward } from '../../reward'
 import { Operation } from '../../common'
 import {
   GAME_STATUS_ENUM,
@@ -57,7 +58,7 @@ export class Game extends Operation {
 
   @IsEnum(GAME_STATUS_ENUM)
   @ApiProperty({
-    enum: Object.keys(GAME_STATUS_ENUM),
+    enum: GAME_STATUS_ENUM,
     default: GAME_STATUS_ENUM.DRAFT,
   })
   @Column({
@@ -80,7 +81,7 @@ export class Game extends Operation {
 
   @IsEnum(GAME_PLAYER_AGENT_MODE)
   @ApiProperty({
-    enum: Object.keys(GAME_PLAYER_AGENT_MODE),
+    enum: GAME_PLAYER_AGENT_MODE,
     default: GAME_PLAYER_AGENT_MODE.NONE,
   })
   @Column({
@@ -92,7 +93,7 @@ export class Game extends Operation {
 
   @IsEnum(GAME_PLAYER_AUTH_MODE)
   @ApiProperty({
-    enum: Object.keys(GAME_PLAYER_AUTH_MODE),
+    enum: GAME_PLAYER_AUTH_MODE,
     default: GAME_PLAYER_AUTH_MODE.NONE,
   })
   @Column({
@@ -110,7 +111,7 @@ export class Game extends Operation {
   @IsEnum(GAME_REWARD_TYPE)
   @ApiProperty({
     default: GAME_REWARD_TYPE.RANK,
-    enum: Object.keys(GAME_REWARD_TYPE),
+    enum: GAME_REWARD_TYPE,
   })
   @Column({
     type: 'enum',
@@ -155,11 +156,16 @@ export class Game extends Operation {
   ogImage: string
 
   @OneToOne(() => Theme)
+  @ApiProperty({ type: Theme })
   @JoinColumn()
   theme: Theme
 
+  @ApiProperty({ type: GamePage, isArray: true })
   @OneToMany(() => GamePage, (page) => page.game)
   pages: GamePage[]
+
+  @ApiProperty({ type: Reward, isArray: true })
+  rewards: Reward[]
 
   @DeleteDateColumn()
   deletedAt: Date

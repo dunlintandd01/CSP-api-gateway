@@ -17,7 +17,7 @@ import { Game } from '../entities'
 export class GameController {
   constructor(private gameService: GameService) {}
 
-  @UseInterceptors(CacheInterceptor)
+  // @UseInterceptors(CacheInterceptor)
   @ApiOkResponse({
     type: Game,
   })
