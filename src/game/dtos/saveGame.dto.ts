@@ -13,7 +13,7 @@ export class SaveTheme extends PartialType(
   ] as const),
 ) {
   @ApiPropertyOptional()
-  id: number
+  id?: number
 }
 
 export class SavePages extends PartialType(
@@ -28,7 +28,7 @@ export class SavePages extends PartialType(
   ] as const),
 ) {
   @ApiPropertyOptional()
-  id: number
+  id?: number
 
   @ApiPropertyOptional({ type: SaveTheme })
   theme?: SaveTheme

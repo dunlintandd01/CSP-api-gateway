@@ -21,8 +21,12 @@ export class RewardService {
     const rewardList = []
     for (let reward of rewards) {
       const newReward = new Reward()
+      if (reward.id) {
+        newReward.id = reward.id
+      } else {
+        newReward.createdBy = operator
+      }
       newReward.referenceId = referenceId
-      newReward.createdBy = operator
       newReward.updatedBy = operator
       rewardList.push(R.merge(newReward, reward))
     }

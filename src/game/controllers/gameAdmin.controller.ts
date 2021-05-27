@@ -58,8 +58,11 @@ export class GameAdminController {
     type: Game,
   })
   async createGame(@Body() body: SaveGameReq, @Request() req): Promise<Game> {
-    const result = await this.gameService.createGame(body, req.user.username)
-    console.log(result)
+    const result = await this.gameService.saveGame(
+      null,
+      body,
+      req.user.username,
+    )
     return result
   }
 
@@ -70,9 +73,10 @@ export class GameAdminController {
   async updateGame(
     @Param('id') id: number,
     @Body() body: SaveGameReq,
-  ): Promise<void> {
-    await this.gameService.updateGame(id, body)
-    return
+    @Request() req,
+  ): Promise<Game> {
+    const result = await this.gameService.saveGame(id, body, req.user.username)
+    return result
   }
 
   @Delete('/:id')

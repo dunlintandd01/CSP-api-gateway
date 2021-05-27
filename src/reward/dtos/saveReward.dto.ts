@@ -13,5 +13,5 @@ export class SaveReward extends PartialType(
   ] as const),
 ) {
   @ApiPropertyOptional()
-  id: number
+  id?: number
 }

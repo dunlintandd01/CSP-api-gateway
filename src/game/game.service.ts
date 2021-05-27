@@ -20,23 +20,38 @@ export class GameService {
     private readonly rewardService: RewardService,
   ) {}
 
-  async createGame(data: SaveGameReq, operator: string): Promise<Game> {
+  async saveGame(
+    id: number | null,
+    data: SaveGameReq,
+    operator: string,
+  ): Promise<Game> {
     let game = new Game()
     game = R.merge(data, game)
-    game.createdBy = operator
+    if (id) {
+      game.id = id
+    } else {
+      game.createdBy = operator
+    }
     game.updatedBy = operator
 
     if (data.pages) {
       const pages = []
       for (let pageData of data.pages) {
         let page = new GamePage()
-        page.createdBy = operator
+        if (pageData.id) {
+          page.id = pageData.id
+        } else {
+          page.createdBy = operator
+        }
         page.updatedBy = operator
         page.pageType = pageData.pageType
         page.rank = pageData.rank
         await this.pageRepository.save(page)
         if (pageData.theme) {
           let theme = new Theme()
+          if (pageData.theme.id) {
+            theme.id = pageData.theme.id
+          }
           page.theme = theme
         }
         pages.push(page)
@@ -45,6 +60,9 @@ export class GameService {
     }
     if (data.theme) {
       let theme = new Theme()
+      if (data.theme.id) {
+        theme.id = data.theme.id
+      }
       game.theme = theme
     }
 
@@ -59,13 +77,6 @@ export class GameService {
     }
 
     return result
-  }
-
-  async updateGame(id: number, data: SaveGameReq): Promise<void> {
-    let game = new Game()
-    game = Object.assign(game, data)
-    await this.gameRepository.update(id, game)
-    return
   }
 
   async getWholeGame(id: number): Promise<Game> {
