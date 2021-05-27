@@ -107,7 +107,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn test",
+      "pre-commit": "yarn test && lint-staged",
       "commit-msg": "commitlint -e $GIT_PARAMS"
     }
   }
