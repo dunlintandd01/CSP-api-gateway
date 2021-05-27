@@ -59,6 +59,7 @@ export class GameAdminController {
   })
   async createGame(@Body() body: SaveGameReq, @Request() req): Promise<Game> {
     const result = await this.gameService.createGame(body, req.user.username)
+    console.log(result)
     return result
   }
 

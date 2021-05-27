@@ -5,9 +5,9 @@ import { Redis } from 'ioredis'
 import * as R from 'ramda'
 
 import { SaveGameReq } from './dtos'
-import { Game, GamePage } from './entities'
+import { Game, GamePage, Theme } from './entities'
 import { InjectRedis } from '../core/redis'
-import { RewardService, Reward } from '../reward'
+import { RewardService } from '../reward'
 
 @Injectable()
 export class GameService {
@@ -30,16 +30,33 @@ export class GameService {
       const pages = []
       for (let pageData of data.pages) {
         let page = new GamePage()
-        page = R.merge(pageData, page)
         page.createdBy = operator
         page.updatedBy = operator
+        page.pageType = pageData.pageType
+        page.rank = pageData.rank
         await this.pageRepository.save(page)
+        if (pageData.theme) {
+          let theme = new Theme()
+          page.theme = theme
+        }
         pages.push(page)
       }
       game.pages = pages
     }
+    if (data.theme) {
+      let theme = new Theme()
+      game.theme = theme
+    }
 
     const result = await this.gameRepository.save(game)
+
+    if (data.rewards) {
+      result.rewards = await this.rewardService.batchSave(
+        result.id,
+        data.rewards,
+        operator,
+      )
+    }
 
     return result
   }

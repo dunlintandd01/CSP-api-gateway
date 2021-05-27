@@ -5,6 +5,7 @@ import {
   PrimaryGeneratedColumn,
   DeleteDateColumn,
   ManyToOne,
+  OneToOne,
 } from 'typeorm'
 import { IsInt, IsEnum } from 'class-validator'
 import { ApiProperty } from '@nestjs/swagger'
@@ -12,6 +13,7 @@ import { ApiProperty } from '@nestjs/swagger'
 import { Operation } from '../../common'
 import { PAGE_TYPE } from '../interfaces'
 import { Game } from './game.entity'
+import { Theme } from './theme.entity'
 
 @Entity()
 export class GamePage extends Operation {
@@ -22,17 +24,16 @@ export class GamePage extends Operation {
 
   @ManyToOne(() => Game, (game) => game.pages)
   @Index('game_idx')
-  game: number
+  game: Game
 
   @IsEnum(PAGE_TYPE)
   @ApiProperty({ enum: PAGE_TYPE })
   @Column({ type: 'enum', enum: PAGE_TYPE })
   pageType: PAGE_TYPE
 
-  @IsInt()
   @ApiProperty()
-  @Column({ type: 'int' })
-  themeId: number
+  @OneToOne(() => Theme)
+  theme: Theme | null
 
   @IsInt()
   @ApiProperty()
