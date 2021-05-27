@@ -68,11 +68,12 @@ export class GameService {
     return
   }
 
-  async getGame(id: number): Promise<Game> {
+  async getWholeGame(id: number): Promise<Game> {
     const result = await this.gameRepository.findOne({
-      relations: ['pages'],
+      relations: ['pages', 'theme'],
       where: { id },
     })
+    result.rewards = await this.rewardService.getRewards(result.id)
     return result
   }
 
@@ -81,10 +82,12 @@ export class GameService {
     page: number,
     pageSize: number,
   ): Promise<Game[]> {
+    const where = {}
+    if (search) {
+      R.merge(where, { name: Like(`%${search}%`) })
+    }
     const result = await this.gameRepository.find({
-      where: {
-        name: Like(`%${search}%`),
-      },
+      where,
       skip: (page - 1) * pageSize,
       take: pageSize,
       order: {
