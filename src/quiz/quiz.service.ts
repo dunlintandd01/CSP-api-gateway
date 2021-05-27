@@ -18,7 +18,6 @@ export class QuizService {
     answers?: Answer[],
   ): Promise<Question> {
     const newQuestion = this.questionRepository.create({ ...question })
-
     const result = await this.questionRepository.save(newQuestion)
     if (answers) {
       await this.answerRepository.save(answers)
