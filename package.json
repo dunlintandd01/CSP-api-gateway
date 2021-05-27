@@ -71,7 +71,6 @@
     "@types/jsonwebtoken": "^8.5.1",
     "@types/node": "^14.14.36",
     "@types/passport-jwt": "^3.0.5",
-    "@types/ramda": "types/npm-ramda#dist",
     "@types/supertest": "^2.0.10",
     "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.19.0",

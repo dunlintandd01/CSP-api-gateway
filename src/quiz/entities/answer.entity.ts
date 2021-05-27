@@ -25,7 +25,6 @@ import {
 } from '../interfaces'
 
 @Entity()
-@Index(['questionId', 'rank'])
 export class Answer extends Operation {
   @IsInt()
   @ApiProperty()
@@ -36,17 +35,16 @@ export class Answer extends Operation {
   @ApiProperty()
   @ManyToOne(() => Question, (question) => question.answers)
   @JoinColumn({ name: 'questionId' })
-  @Index('answer_question_id_idx')
   question: Question
 
   @IsInt()
   @ApiProperty()
-  @Column({ type: 'int', length: 11, default: 0 })
+  @Column({ type: 'int', default: 0 })
   rank: number
 
   @IsInt()
   @ApiProperty()
-  @Column({ type: 'int', length: 11, default: 0 })
+  @Column({ type: 'int', default: 0 })
   score: number
 
   @IsString()
