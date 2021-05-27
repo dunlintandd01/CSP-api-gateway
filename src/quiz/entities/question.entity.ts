@@ -23,16 +23,16 @@ export class Question extends Operation {
 
   @IsInt()
   @ApiProperty()
-  @Column({ type: 'int', length: 11 })
+  @Column({ type: 'int' })
   @Index('question_reference_id_idx')
   referenceId: number
 
   @OneToMany(() => Answer, (answer) => answer.question)
-  answers: Answer
+  answers: Answer[]
 
   @IsInt()
   @ApiProperty()
-  @Column({ type: 'int', length: 11, default: 0 })
+  @Column({ type: 'int', default: 0 })
   rank: number
 
   @IsString()
@@ -61,7 +61,7 @@ export class Question extends Operation {
 
   @IsInt()
   @ApiProperty()
-  @Column({ type: 'int', length: 1, default: 0 })
+  @Column({ type: 'int', default: 0 })
   multipled: number
 
   @IsEnum(QUESTION_TYPE_ENUM)
