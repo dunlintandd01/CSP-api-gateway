@@ -2,8 +2,6 @@ import {
   Controller,
   Get,
   Param,
-  CacheInterceptor,
-  UseInterceptors,
   HttpException,
   HttpStatus,
 } from '@nestjs/common'

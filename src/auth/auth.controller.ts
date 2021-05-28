@@ -1,8 +1,8 @@
-import { Controller, Post, Body, Response } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { Controller, Post, Body, Response } from '@nestjs/common'
+import { ApiTags } from '@nestjs/swagger'
 
-import { AuthService } from './auth.service';
-import { AdminLoginRequestDto } from './dto/adminLogin.dto';
+import { AuthService } from './auth.service'
+import { AdminLoginRequestDto } from './dto/adminLogin.dto'
 
 @Controller('')
 @ApiTags('auth')
@@ -14,8 +14,8 @@ export class AuthController {
     const adminToken = await this.authService.adminLogin(
       body.authCode,
       body.redirectUrl,
-    );
-    res.set('Authorization', `Bearer ${adminToken}`);
-    return {};
+    )
+    res.set('Authorization', `Bearer ${adminToken}`)
+    return {}
   }
 }

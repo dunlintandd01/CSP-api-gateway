@@ -1,9 +1,9 @@
-import { ExtractJwt, Strategy } from 'passport-jwt';
-import { PassportStrategy } from '@nestjs/passport';
-import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { readFileSync } from 'fs';
-import { join } from 'path';
+import { ExtractJwt, Strategy } from 'passport-jwt'
+import { PassportStrategy } from '@nestjs/passport'
+import { Injectable } from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
+import { readFileSync } from 'fs'
+import { join } from 'path'
 
 @Injectable()
 export class MemberStrategy extends PassportStrategy(Strategy, 'member') {
@@ -19,10 +19,10 @@ export class MemberStrategy extends PassportStrategy(Strategy, 'member') {
         ), // TODO: using absolute path instead
       ),
       algorithms: ['RS256'],
-    });
+    })
   }
 
   async validate(payload: any) {
-    return { userId: payload.sub, username: payload.username };
+    return { userId: payload.sub, username: payload.username }
   }
 }

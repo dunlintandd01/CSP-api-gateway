@@ -21,7 +21,7 @@ describe('RewardManageService', () => {
     static find = jest.fn().mockResolvedValue([reward])
     static save = jest.fn().mockImplementation((rewards) => {
       const result = []
-      for (let data of rewards) {
+      for (const data of rewards) {
         const temp = data.id ? reward : Object.assign({ id: fakeID }, reward)
         result.push(temp)
       }
@@ -47,9 +47,9 @@ describe('RewardManageService', () => {
   describe('save', () => {
     it('should return an array of rewards', async () => {
       const data = [reward, R.omit(['id'], reward)]
-      expect(
-        await service.batchSave(fakeID, data, fakeUserName),
-      ).toStrictEqual([reward, reward])
+      expect(await service.batchSave(fakeID, data, fakeUserName)).toStrictEqual(
+        [reward, reward],
+      )
     })
   })
 

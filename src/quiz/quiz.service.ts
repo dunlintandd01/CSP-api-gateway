@@ -17,6 +17,8 @@ export class QuizService {
     question: Question,
     answers?: Answer[],
   ): Promise<Question> {
+    question.createdAt = new Date()
+
     const newQuestion = this.questionRepository.create({ ...question })
     const result = await this.questionRepository.save(newQuestion)
 

@@ -24,20 +24,20 @@ describe('Game Controller', () => {
 
   class GamePageRepo {
     static findOne = jest.fn().mockResolvedValue(page)
-    static save = jest.fn().mockImplementation((game) => {
+    static save = jest.fn().mockImplementation(() => {
       return page.id ? page : Object.assign({ id: fakeID }, page)
     })
-    static create = jest.fn().mockImplementation((game) => page)
+    static create = jest.fn().mockImplementation(() => page)
     static softDelete = jest.fn().mockResolvedValue(null)
     static update = jest.fn().mockResolvedValue(null)
   }
 
   class RewardRepo {
     static findOne = jest.fn().mockResolvedValue(page)
-    static save = jest.fn().mockImplementation((game) => {
+    static save = jest.fn().mockImplementation(() => {
       return page.id ? page : Object.assign({ id: fakeID }, page)
     })
-    static create = jest.fn().mockImplementation((game) => page)
+    static create = jest.fn().mockImplementation(() => page)
     static softDelete = jest.fn().mockResolvedValue(null)
     static update = jest.fn().mockResolvedValue(null)
   }
