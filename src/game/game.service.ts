@@ -36,8 +36,8 @@ export class GameService {
 
     if (data.pages) {
       const pages = []
-      for (let pageData of data.pages) {
-        let page = new GamePage()
+      for (const pageData of data.pages) {
+        const page = new GamePage()
         if (pageData.id) {
           page.id = pageData.id
         } else {
@@ -48,7 +48,7 @@ export class GameService {
         page.rank = pageData.rank
         await this.pageRepository.save(page)
         if (pageData.theme) {
-          let theme = new Theme()
+          const theme = new Theme()
           if (pageData.theme.id) {
             theme.id = pageData.theme.id
           }
@@ -59,7 +59,7 @@ export class GameService {
       game.pages = pages
     }
     if (data.theme) {
-      let theme = new Theme()
+      const theme = new Theme()
       if (data.theme.id) {
         theme.id = data.theme.id
       }

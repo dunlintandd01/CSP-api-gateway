@@ -1,7 +1,6 @@
 import {
   Entity,
   Column,
-  Index,
   PrimaryGeneratedColumn,
   DeleteDateColumn,
   ManyToOne,
@@ -111,6 +110,6 @@ export class Answer extends Operation {
 
   @IsString()
   @ApiProperty()
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', nullable: true })
   deletedBy: string
 }

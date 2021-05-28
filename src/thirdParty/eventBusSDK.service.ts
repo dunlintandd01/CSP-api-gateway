@@ -1,5 +1,5 @@
-import { Inject } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import { Inject } from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
 
 export class EventBusSDKService {
   constructor(
@@ -15,6 +15,6 @@ export class EventBusSDKService {
         retries: this.configService.get<string>('EVENT_BUS_RETRY_TIME'),
         maxTimeout: this.configService.get<string>('EVENT_BUS_MAX_TIMEOUT'),
       },
-    });
+    })
   }
 }
