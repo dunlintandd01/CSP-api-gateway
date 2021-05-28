@@ -17,18 +17,14 @@ import { ApiProperty } from '@nestjs/swagger'
 
 import { Operation } from '../../common'
 import { Question } from './question.entity'
-import {
-  ANSWER_STATUS_ENUM,
-  ANSWER_TYPE_ENUM,
-  ANSWER_HINT_TYPE_ENUM,
-} from '../interfaces'
+import { ANSWER_TYPE_ENUM, ANSWER_HINT_TYPE_ENUM } from '../interfaces'
 
 @Entity()
 export class Answer extends Operation {
   @IsInt()
   @ApiProperty()
   @PrimaryGeneratedColumn()
-  answerId: number
+  id: number
 
   @IsInt()
   @ApiProperty()
@@ -50,15 +46,6 @@ export class Answer extends Operation {
   @ApiProperty()
   @Column({ type: 'varchar' })
   attribute: string
-
-  @IsEnum(ANSWER_STATUS_ENUM)
-  @ApiProperty()
-  @Column({
-    type: 'enum',
-    enum: ANSWER_STATUS_ENUM,
-    default: ANSWER_STATUS_ENUM.NORMAL,
-  })
-  status: ANSWER_STATUS_ENUM
 
   @IsEnum(ANSWER_TYPE_ENUM)
   @ApiProperty()
@@ -107,9 +94,4 @@ export class Answer extends Operation {
   @ApiProperty()
   @DeleteDateColumn()
   deletedAt: Date
-
-  @IsString()
-  @ApiProperty()
-  @Column({ type: 'varchar', nullable: true })
-  deletedBy: string
 }

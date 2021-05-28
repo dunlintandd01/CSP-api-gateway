@@ -1,8 +1,3 @@
-export enum QUESTION_STATUS_ENUM {
-  NORMAL = 'NORMAL',
-  DELETED = 'DELETED',
-}
-
 export enum QUESTION_TYPE_ENUM {
   TEXT = 'TEXT',
   IMAGE = 'IMAGE',
