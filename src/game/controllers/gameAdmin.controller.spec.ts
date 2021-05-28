@@ -88,17 +88,14 @@ describe('Game Admin Controller', () => {
 
   describe('create game', () => {
     it('should return a game', async () => {
-      expect(
-        await controller.createGame(
-          { name: 'create a test game' },
-          { user: fakeUser },
-        ),
-      ).toStrictEqual({
-        id: fakeID,
-        name: 'create a test game',
-        createdBy: fakeUserName,
-        updatedBy: fakeUserName,
-      })
+      const result = await controller.createGame(
+        { name: 'create a test game' },
+        { user: fakeUser },
+      )
+      expect(result.id).toBe(fakeID)
+      expect(result.code).toHaveLength(10)
+      expect(result.createdBy).toBe(fakeUserName)
+      expect(result.updatedBy).toBe(fakeUserName)
     })
   })
 
@@ -107,21 +104,18 @@ describe('Game Admin Controller', () => {
       jest
         .spyOn(rewardService, 'batchSave')
         .mockResolvedValueOnce([reward as Reward, reward as Reward])
-      expect(
-        await controller.createGame(
-          {
-            name: 'create a reward test game',
-            rewards: [R.omit(['id'], reward), R.omit(['id'], reward)],
-          },
-          { user: fakeUser },
-        ),
-      ).toStrictEqual({
-        id: fakeID,
-        name: 'create a reward test game',
-        rewards: [reward, reward],
-        createdBy: fakeUserName,
-        updatedBy: fakeUserName,
-      })
+      const result = await controller.createGame(
+        {
+          name: 'create a reward test game',
+          rewards: [R.omit(['id'], reward), R.omit(['id'], reward)],
+        },
+        { user: fakeUser },
+      )
+      expect(result.id).toBe(fakeID)
+      expect(result.code).toHaveLength(10)
+      expect(result.createdBy).toBe(fakeUserName)
+      expect(result.updatedBy).toBe(fakeUserName)
+      expect(result.rewards).toStrictEqual([reward, reward])
     })
   })
 

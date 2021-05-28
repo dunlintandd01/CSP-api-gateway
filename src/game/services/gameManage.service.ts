@@ -2,10 +2,13 @@ import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository, Like } from 'typeorm'
 import * as R from 'ramda'
+import { urlAlphabet, customAlphabet } from 'nanoid'
 
 import { SaveGameReq } from '../dtos'
 import { Game, GamePage, Theme } from '../entities'
 import { RewardManageService } from '../../reward'
+
+const nanoid = customAlphabet(urlAlphabet, 10)
 
 @Injectable()
 export class GameManageService {
@@ -27,6 +30,9 @@ export class GameManageService {
     if (id) {
       game.id = id
     } else {
+      // NOTE: not checking duplicate IDs because of game data not increment that fast, and if collision, just try save again
+      // reference: https://zelark.github.io/nano-id-cc/
+      game.code = nanoid()
       game.createdBy = operator
     }
     game.updatedBy = operator

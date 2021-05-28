@@ -37,6 +37,7 @@ export class SavePages extends PartialType(
 export class SaveGameReq extends PartialType(
   OmitType(Game, [
     'id',
+    'code',
     'createdAt',
     'createdBy',
     'updatedAt',

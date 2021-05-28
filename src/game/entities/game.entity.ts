@@ -35,6 +35,11 @@ export class Game extends Operation {
   @PrimaryGeneratedColumn()
   id: number
 
+  @ApiProperty()
+  @Index('game_code_idx')
+  @Column({ type: 'varchar', length: 10, unique: true })
+  code: string
+
   @IsString()
   @ApiProperty()
   @Column()
