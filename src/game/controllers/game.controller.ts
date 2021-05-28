@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common'
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger'
 
-import { GameService } from '../game.service'
+import { GameService } from '../services/game.service'
 import { Game } from '../entities'
 
 @Controller('game')

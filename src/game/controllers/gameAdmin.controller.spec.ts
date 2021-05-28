@@ -4,14 +4,14 @@ import * as R from 'ramda'
 
 import { getRedisToken } from '../../core/redis'
 import { GameAdminController } from './gameAdmin.controller'
-import { GameService } from '../game.service'
-import { RewardService, Reward } from '../../reward'
+import { GameManageService } from '../services/gameManage.service'
+import { RewardManageService, Reward } from '../../reward'
 import { Game, GamePage } from '../entities'
 import { REWARD_TYPE, STOCK_TYPE } from '../../reward/interfaces/reward'
 
 describe('Game Admin Controller', () => {
   let controller: GameAdminController
-  let rewardService: RewardService
+  let rewardService: RewardManageService
   const fakeID = 123
   const fakeUserName = 'tester'
   const fakeUser = { username: fakeUserName, userId: 'u123' }
@@ -54,8 +54,8 @@ describe('Game Admin Controller', () => {
     const moduleRef = await Test.createTestingModule({
       controllers: [GameAdminController],
       providers: [
-        GameService,
-        RewardService,
+        GameManageService,
+        RewardManageService,
         {
           provide: getRepositoryToken(Game),
           useValue: GameRepo,
@@ -75,7 +75,7 @@ describe('Game Admin Controller', () => {
       ],
     }).compile()
 
-    rewardService = moduleRef.get<RewardService>(RewardService)
+    rewardService = moduleRef.get<RewardManageService>(RewardManageService)
     controller = moduleRef.get<GameAdminController>(GameAdminController)
   })
 

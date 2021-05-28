@@ -16,7 +16,7 @@ import { ApiTags, ApiOkResponse, ApiBearerAuth } from '@nestjs/swagger'
 
 import { AdminAuthGuard } from '../../auth/guards/admin.guard'
 
-import { GameService } from '../game.service'
+import { GameManageService } from '../services/gameManage.service'
 import { SaveGameReq, GetGameListReq } from '../dtos'
 import { Game } from '../entities'
 
@@ -25,7 +25,7 @@ import { Game } from '../entities'
 @UseGuards(AdminAuthGuard)
 @ApiBearerAuth('admin')
 export class GameAdminController {
-  constructor(private gameService: GameService) {}
+  constructor(private gameService: GameManageService) {}
 
   @Get('/')
   @ApiOkResponse({

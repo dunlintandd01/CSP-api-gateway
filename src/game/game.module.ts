@@ -4,7 +4,8 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 
 import { RewardModule } from '../reward'
 
-import { GameService } from './game.service'
+import { GameManageService } from './services/gameManage.service'
+import { GameService } from './services/game.service'
 import { GameAdminController } from './controllers/gameAdmin.controller'
 import { GameController } from './controllers/game.controller'
 import {
@@ -34,6 +35,6 @@ import {
     RewardModule,
   ],
   controllers: [GameAdminController, GameController],
-  providers: [GameService],
+  providers: [GameService, GameManageService],
 })
 export class GameModule {}

@@ -1,5 +1,5 @@
 export * from './reward.module'
-export * from './services/reward.service'
+export * from './services/rewardManage.service'
 export * from './entities/reward.entity'
 export * from './dtos/saveReward.dto'
 export * from './interfaces/reward'

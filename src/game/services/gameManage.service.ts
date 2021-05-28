@@ -1,23 +1,20 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository, Like } from 'typeorm'
-import { Redis } from 'ioredis'
 import * as R from 'ramda'
 
-import { SaveGameReq } from './dtos'
-import { Game, GamePage, Theme } from './entities'
-import { InjectRedis } from '../core/redis'
-import { RewardService } from '../reward'
+import { SaveGameReq } from '../dtos'
+import { Game, GamePage, Theme } from '../entities'
+import { RewardManageService } from '../../reward'
 
 @Injectable()
-export class GameService {
+export class GameManageService {
   constructor(
     @InjectRepository(Game)
     private gameRepository: Repository<Game>,
     @InjectRepository(GamePage)
     private pageRepository: Repository<GamePage>,
-    @InjectRedis() private redisClient: Redis,
-    private readonly rewardService: RewardService,
+    private readonly rewardService: RewardManageService,
   ) {}
 
   async saveGame(
@@ -111,19 +108,5 @@ export class GameService {
   async deleteGame(id: number): Promise<void> {
     await this.gameRepository.softDelete(id)
     return
-  }
-
-  async getGameWithCache(id: number): Promise<Game> {
-    const cacheKey = `game_data:${id}`
-    const cache = await this.redisClient.get(cacheKey)
-    if (cache) {
-      return JSON.parse(cache)
-    }
-    let result
-    if (!cache) {
-      result = await this.gameRepository.findOne(id)
-      await this.redisClient.set(cacheKey, JSON.stringify(result))
-    }
-    return result
   }
 }

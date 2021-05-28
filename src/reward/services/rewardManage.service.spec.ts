@@ -2,10 +2,10 @@ import { Test } from '@nestjs/testing'
 import { getRepositoryToken } from '@nestjs/typeorm'
 import * as R from 'ramda'
 
-import { REWARD_TYPE, STOCK_TYPE, Reward, RewardService } from '../'
+import { REWARD_TYPE, STOCK_TYPE, Reward, RewardManageService } from '..'
 
-describe('RewardService', () => {
-  let rewardService: RewardService
+describe('RewardManageService', () => {
+  let service: RewardManageService
 
   const fakeID = 123
   const fakeUserName = 'tester'
@@ -33,7 +33,7 @@ describe('RewardService', () => {
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
       providers: [
-        RewardService,
+        RewardManageService,
         {
           provide: getRepositoryToken(Reward),
           useValue: RewardRepo,
@@ -41,21 +41,21 @@ describe('RewardService', () => {
       ],
     }).compile()
 
-    rewardService = moduleRef.get<RewardService>(RewardService)
+    service = moduleRef.get<RewardManageService>(RewardManageService)
   })
 
   describe('save', () => {
     it('should return an array of rewards', async () => {
       const data = [reward, R.omit(['id'], reward)]
       expect(
-        await rewardService.batchSave(fakeID, data, fakeUserName),
+        await service.batchSave(fakeID, data, fakeUserName),
       ).toStrictEqual([reward, reward])
     })
   })
 
   describe('get rewards', () => {
     it('should return an array of rewards', async () => {
-      expect(await rewardService.getRewards(fakeID)).toStrictEqual([reward])
+      expect(await service.getRewards(fakeID)).toStrictEqual([reward])
     })
   })
 })

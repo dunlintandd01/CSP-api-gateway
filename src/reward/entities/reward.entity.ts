@@ -12,6 +12,7 @@ import { Operation } from '../../common'
 import { REWARD_TYPE, STOCK_TYPE } from '../interfaces/reward'
 
 @Entity()
+@Index([`referenceId`, `deletedAt`, `probability`, `stockType`, `stockAmount`])
 export class Reward extends Operation {
   @IsInt()
   @ApiProperty()

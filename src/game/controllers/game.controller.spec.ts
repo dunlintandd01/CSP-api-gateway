@@ -3,13 +3,11 @@ import { getRepositoryToken } from '@nestjs/typeorm'
 
 import { getRedisToken } from '../../core/redis'
 import { GameController } from './game.controller'
-import { GameService } from '../game.service'
-import { Reward, RewardService } from '../../reward'
+import { GameService } from '../services/game.service'
 import { Game, GamePage } from '../entities'
 
 describe('Game Controller', () => {
   let controller: GameController
-  let rewardService: RewardService
   const fakeID = 123
   const game = { id: fakeID, name: 'testing game' }
   const page = { id: fakeID, gameId: fakeID }
@@ -54,7 +52,6 @@ describe('Game Controller', () => {
       controllers: [GameController],
       providers: [
         GameService,
-        RewardService,
         {
           provide: getRepositoryToken(Game),
           useValue: GameRepo,
@@ -64,30 +61,23 @@ describe('Game Controller', () => {
           useValue: GamePageRepo,
         },
         {
-          provide: getRepositoryToken(Reward),
-          useValue: RewardRepo,
-        },
-        {
           provide: getRedisToken(),
           useValue: RedisClient,
         },
       ],
     }).compile()
 
-    rewardService = moduleRef.get<RewardService>(RewardService)
     controller = moduleRef.get<GameController>(GameController)
   })
 
   describe('get game missing cache', () => {
     it('should return a game', async () => {
-      jest.spyOn(rewardService, 'getRewards').mockResolvedValueOnce([])
       expect(await controller.getGame(fakeID)).toStrictEqual(game)
     })
   })
 
   describe('get game hit cache', () => {
     it('should return a game', async () => {
-      jest.spyOn(rewardService, 'getRewards').mockResolvedValueOnce([])
       expect(await controller.getGame(fakeID)).toStrictEqual(game)
     })
   })
