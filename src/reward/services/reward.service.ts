@@ -19,7 +19,7 @@ export class RewardService {
     operator: string,
   ): Promise<Reward[]> {
     const rewardList = []
-    for (let reward of rewards) {
+    for (const reward of rewards) {
       const newReward = new Reward()
       if (reward.id) {
         newReward.id = reward.id

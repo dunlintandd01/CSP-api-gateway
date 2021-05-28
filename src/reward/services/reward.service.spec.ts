@@ -21,7 +21,7 @@ describe('RewardService', () => {
     static find = jest.fn().mockResolvedValue([reward])
     static save = jest.fn().mockImplementation((rewards) => {
       const result = []
-      for (let data of rewards) {
+      for (const data of rewards) {
         const temp = data.id ? reward : Object.assign({ id: fakeID }, reward)
         result.push(temp)
       }

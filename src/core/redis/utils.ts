@@ -1,5 +1,5 @@
-import { REDIS_MODULE_CONNECTION_TOKEN } from './constants';
+import { REDIS_MODULE_CONNECTION_TOKEN } from './constants'
 
 export function getRedisToken() {
-  return REDIS_MODULE_CONNECTION_TOKEN;
+  return REDIS_MODULE_CONNECTION_TOKEN
 }

@@ -80,6 +80,6 @@ export class Question extends Operation {
 
   @IsString()
   @ApiProperty()
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', nullable: true })
   deletedBy: string
 }

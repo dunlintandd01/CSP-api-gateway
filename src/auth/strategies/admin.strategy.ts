@@ -1,7 +1,7 @@
-import { ExtractJwt, Strategy } from 'passport-jwt';
-import { ConfigService } from '@nestjs/config';
-import { PassportStrategy } from '@nestjs/passport';
-import { Injectable } from '@nestjs/common';
+import { ExtractJwt, Strategy } from 'passport-jwt'
+import { ConfigService } from '@nestjs/config'
+import { PassportStrategy } from '@nestjs/passport'
+import { Injectable } from '@nestjs/common'
 
 @Injectable()
 export class AdminStrategy extends PassportStrategy(Strategy, 'admin') {
@@ -12,10 +12,10 @@ export class AdminStrategy extends PassportStrategy(Strategy, 'admin') {
       secretOrKey: configService.get<string>('SSO_SECRET'),
       algorithms: ['HS256'],
       // issuer: 'hk01-project',
-    });
+    })
   }
 
   async validate(payload: any) {
-    return { userId: payload.sub, username: payload.username };
+    return { userId: payload.sub, username: payload.username }
   }
 }

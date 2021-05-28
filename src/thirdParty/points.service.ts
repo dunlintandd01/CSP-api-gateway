@@ -1,16 +1,16 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { hk01 } from '@hk01-digital/shared-event-proto';
-import EventbusSDK from '@hk01-digital/eventbus-js-sdk';
-import { EventBusSDKService } from './eventBusSDK.service';
+import { Injectable, Logger } from '@nestjs/common'
+import { hk01 } from '@hk01-digital/shared-event-proto'
+import EventbusSDK from '@hk01-digital/eventbus-js-sdk'
+import { EventBusSDKService } from './eventBusSDK.service'
 
-const { GameCompleted } = hk01.protobuf.game.mcgame;
+const { GameCompleted } = hk01.protobuf.game.mcgame
 
 @Injectable()
 export class PointsService {
-  logger: Logger;
+  logger: Logger
 
   constructor(private eventBusSDKService: EventBusSDKService) {
-    this.logger = new Logger(PointsService.name);
+    this.logger = new Logger(PointsService.name)
   }
 
   async publishGameCompleted(
@@ -31,21 +31,21 @@ export class PointsService {
         attempt: attempt,
         completedTs: completedTs,
         lotteryRewardId: lotteryRewardId,
-      };
-
-      const verifyErr = GameCompleted.verify(pojo);
-      if (verifyErr) {
-        //TODO: integrate error
-        throw new Error('protobuf error');
       }
 
-      const message = GameCompleted.create(pojo);
-      const { topic, envelope } = EventbusSDK.createEnvelopeWithBody(message);
-      return this.eventBusSDKService.publish(topic, envelope);
+      const verifyErr = GameCompleted.verify(pojo)
+      if (verifyErr) {
+        //TODO: integrate error
+        throw new Error('protobuf error')
+      }
+
+      const message = GameCompleted.create(pojo)
+      const { topic, envelope } = EventbusSDK.createEnvelopeWithBody(message)
+      return this.eventBusSDKService.publish(topic, envelope)
     } catch (error) {
       //TODO: insert to eventbus retry queue
-      this.logger.error('eventbus publish error');
-      return false;
+      this.logger.error('eventbus publish error')
+      return false
     }
   }
 }
