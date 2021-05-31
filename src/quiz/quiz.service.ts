@@ -26,7 +26,7 @@ export class QuizService {
     const questions = []
     for (const questionData of data) {
       let question = new Question()
-      question = R.merge(data, question)
+      question = R.merge(questionData, question)
       if (questionData.id) {
         question.id = questionData.id
       } else {
