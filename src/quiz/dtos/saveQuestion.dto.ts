@@ -2,7 +2,7 @@ import { OmitType, PartialType, ApiPropertyOptional } from '@nestjs/swagger'
 
 import { Question, Answer } from '../entities'
 
-export class SaveAnswerReq extends PartialType(
+export class SaveAnswer extends PartialType(
   OmitType(Answer, [
     'id',
     'createdAt',
@@ -14,7 +14,7 @@ export class SaveAnswerReq extends PartialType(
   @ApiPropertyOptional()
   id?: number
 }
-export class SaveQuestionReq extends PartialType(
+export class SaveQuestion extends PartialType(
   OmitType(Question, [
     'referenceId',
     'createdAt',
@@ -27,6 +27,6 @@ export class SaveQuestionReq extends PartialType(
   @ApiPropertyOptional()
   id?: number
 
-  @ApiPropertyOptional({ type: [SaveAnswerReq] })
-  answers?: SaveAnswerReq[]
+  @ApiPropertyOptional({ type: [SaveAnswer] })
+  answers?: SaveAnswer[]
 }

@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 
 import { RewardModule } from '../reward'
+import { QuizModule } from '../quiz'
 
 import { GameManageService } from './services/gameManage.service'
 import { GameService } from './services/game.service'
@@ -33,6 +34,7 @@ import {
       ResultPageModule,
     ]),
     RewardModule,
+    QuizModule,
   ],
   controllers: [GameAdminController, GameController],
   providers: [GameService, GameManageService],

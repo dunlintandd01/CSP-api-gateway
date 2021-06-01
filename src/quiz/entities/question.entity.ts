@@ -39,12 +39,12 @@ export class Question extends Operation {
 
   @IsString()
   @ApiProperty()
-  @Column({ type: 'text' })
+  @Column()
   title: string
 
   @IsString()
   @ApiProperty()
-  @Column({ type: 'text' })
+  @Column()
   description: string
 
   @IsString()
@@ -58,7 +58,7 @@ export class Question extends Operation {
   multipled: number
 
   @IsEnum(QUESTION_TYPE_ENUM)
-  @ApiProperty()
+  @ApiProperty({ enum: QUESTION_TYPE_ENUM, default: QUESTION_TYPE_ENUM.TEXT })
   @Column({
     type: 'enum',
     enum: QUESTION_TYPE_ENUM,

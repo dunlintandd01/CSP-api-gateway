@@ -27,6 +27,7 @@ import {
 } from '../interfaces'
 import { Theme } from './theme.entity'
 import { GamePage } from './gamePage.entity'
+import { Question } from '../../quiz'
 
 @Entity()
 export class Game extends Operation {
@@ -166,6 +167,9 @@ export class Game extends Operation {
 
   @ApiProperty({ type: Reward, isArray: true })
   rewards: Reward[]
+
+  @ApiProperty({ type: Question, isArray: true })
+  questions: Question[]
 
   @DeleteDateColumn()
   deletedAt: Date

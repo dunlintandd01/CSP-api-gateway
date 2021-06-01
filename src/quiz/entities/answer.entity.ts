@@ -26,10 +26,8 @@ export class Answer extends Operation {
   @PrimaryGeneratedColumn()
   id: number
 
-  @IsInt()
-  @ApiProperty()
+  @ApiProperty({ type: () => Question })
   @ManyToOne(() => Question, (question) => question.answers)
-  @JoinColumn({ name: 'questionId' })
   question: Question
 
   @IsInt()
@@ -48,7 +46,7 @@ export class Answer extends Operation {
   attribute: string
 
   @IsEnum(ANSWER_TYPE_ENUM)
-  @ApiProperty()
+  @ApiProperty({ enum: ANSWER_TYPE_ENUM, default: ANSWER_TYPE_ENUM.TEXT })
   @Column({
     type: 'enum',
     enum: ANSWER_TYPE_ENUM,
@@ -58,7 +56,7 @@ export class Answer extends Operation {
 
   @IsString()
   @ApiProperty()
-  @Column({ type: 'text' })
+  @Column()
   content: string
 
   @IsString()
@@ -68,11 +66,14 @@ export class Answer extends Operation {
 
   @IsString()
   @ApiProperty()
-  @Column({ type: 'text' })
+  @Column()
   imageDescription: string
 
   @IsEnum(ANSWER_HINT_TYPE_ENUM)
-  @ApiProperty()
+  @ApiProperty({
+    enum: ANSWER_HINT_TYPE_ENUM,
+    default: ANSWER_HINT_TYPE_ENUM.NONE,
+  })
   @Column({
     type: 'enum',
     enum: ANSWER_HINT_TYPE_ENUM,

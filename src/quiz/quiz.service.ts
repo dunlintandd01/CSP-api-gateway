@@ -5,7 +5,7 @@ import { Redis } from 'ioredis'
 import * as R from 'ramda'
 
 import { Question, Answer } from './entities'
-import { SaveQuestionReq } from './dtos'
+import { SaveQuestion } from './dtos'
 import { InjectRedis } from '../core/redis'
 
 @Injectable()
@@ -20,7 +20,7 @@ export class QuizService {
 
   async saveQuestions(
     referenceId: number,
-    data: SaveQuestionReq[],
+    data: SaveQuestion[],
     operator: string,
   ): Promise<Question[]> {
     const questions = []
