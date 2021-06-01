@@ -6,6 +6,7 @@ import * as R from 'ramda'
 import { SaveGameReq } from '../dtos'
 import { Game, GamePage, Theme } from '../entities'
 import { RewardManageService } from '../../reward'
+import { QuizService } from '../../quiz'
 
 @Injectable()
 export class GameManageService {
@@ -15,6 +16,7 @@ export class GameManageService {
     @InjectRepository(GamePage)
     private pageRepository: Repository<GamePage>,
     private readonly rewardService: RewardManageService,
+    private readonly quizService: QuizService,
   ) {}
 
   async saveGame(
@@ -69,6 +71,14 @@ export class GameManageService {
       result.rewards = await this.rewardService.batchSave(
         result.id,
         data.rewards,
+        operator,
+      )
+    }
+
+    if (data.questions) {
+      result.questions = await this.quizService.saveQuestions(
+        result.id,
+        data.questions,
         operator,
       )
     }
