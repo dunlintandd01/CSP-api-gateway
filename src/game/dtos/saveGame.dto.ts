@@ -2,6 +2,7 @@ import { OmitType, PartialType, ApiPropertyOptional } from '@nestjs/swagger'
 
 import { Game, GamePage, Theme } from '../entities'
 import { SaveReward } from '../../reward'
+import { SaveQuestion } from '../../quiz'
 
 export class SaveTheme extends PartialType(
   OmitType(Theme, [
@@ -45,6 +46,7 @@ export class SaveGameReq extends PartialType(
     'pages',
     'theme',
     'rewards',
+    'questions',
   ] as const),
 ) {
   @ApiPropertyOptional({ type: [SavePages] })
@@ -55,4 +57,7 @@ export class SaveGameReq extends PartialType(
 
   @ApiPropertyOptional({ type: [SaveReward] })
   rewards?: SaveReward[]
+
+  @ApiPropertyOptional({ type: [SaveQuestion] })
+  questions?: SaveQuestion[]
 }

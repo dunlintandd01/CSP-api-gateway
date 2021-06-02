@@ -8,10 +8,13 @@ import { GameManageService } from '../services/gameManage.service'
 import { RewardManageService, Reward } from '../../reward'
 import { Game, GamePage } from '../entities'
 import { REWARD_TYPE, STOCK_TYPE } from '../../reward/interfaces/reward'
+import { QuizService, Question, Answer } from '../../quiz'
 
 describe('Game Admin Controller', () => {
   let controller: GameAdminController
   let rewardService: RewardManageService
+  let quizService: QuizService
+
   const fakeID = 123
   const fakeUserName = 'tester'
   const fakeUser = { username: fakeUserName, userId: 'u123' }
@@ -23,6 +26,14 @@ describe('Game Admin Controller', () => {
     stockType: STOCK_TYPE.LIMITED,
     totalAmount: 1,
     probability: 1,
+  }
+  const question = {
+    id: fakeID,
+    answers: [
+      {
+        id: fakeID,
+      },
+    ],
   }
 
   class GameRepo {
@@ -45,6 +56,10 @@ describe('Game Admin Controller', () => {
 
   class RewardRepo {}
 
+  class QuestionRepo {}
+
+  class AnswerRepo {}
+
   class RedisClient {
     static get = jest.fn().mockResolvedValue(JSON.stringify(game))
     static set = jest.fn().mockResolvedValue(true)
@@ -56,6 +71,7 @@ describe('Game Admin Controller', () => {
       providers: [
         GameManageService,
         RewardManageService,
+        QuizService,
         {
           provide: getRepositoryToken(Game),
           useValue: GameRepo,
@@ -69,6 +85,14 @@ describe('Game Admin Controller', () => {
           useValue: RewardRepo,
         },
         {
+          provide: getRepositoryToken(Question),
+          useValue: QuestionRepo,
+        },
+        {
+          provide: getRepositoryToken(Answer),
+          useValue: AnswerRepo,
+        },
+        {
           provide: getRedisToken(),
           useValue: RedisClient,
         },
@@ -76,6 +100,7 @@ describe('Game Admin Controller', () => {
     }).compile()
 
     rewardService = moduleRef.get<RewardManageService>(RewardManageService)
+    quizService = moduleRef.get<QuizService>(QuizService)
     controller = moduleRef.get<GameAdminController>(GameAdminController)
   })
 
@@ -116,6 +141,29 @@ describe('Game Admin Controller', () => {
       expect(result.createdBy).toBe(fakeUserName)
       expect(result.updatedBy).toBe(fakeUserName)
       expect(result.rewards).toStrictEqual([reward, reward])
+    })
+  })
+
+  describe('create game with questions', () => {
+    it('should return a game', async () => {
+      jest
+        .spyOn(quizService, 'saveQuestions')
+        .mockResolvedValueOnce([question as Question])
+      expect(
+        await controller.createGame(
+          {
+            name: 'create a test game with questions',
+            questions: [question],
+          },
+          { user: fakeUser },
+        ),
+      ).toStrictEqual({
+        id: fakeID,
+        name: 'create a test game with questions',
+        questions: [question],
+        createdBy: fakeUserName,
+        updatedBy: fakeUserName,
+      })
     })
   })
 

@@ -11,7 +11,7 @@ import { ApiProperty } from '@nestjs/swagger'
 
 import { Operation } from '../../common'
 import { Answer } from './answer.entity'
-import { QUESTION_STATUS_ENUM, QUESTION_TYPE_ENUM } from '../interfaces'
+import { QUESTION_TYPE_ENUM } from '../interfaces'
 
 @Entity()
 @Index(['referenceId', 'rank'])
@@ -19,7 +19,7 @@ export class Question extends Operation {
   @IsInt()
   @ApiProperty()
   @PrimaryGeneratedColumn()
-  questionId: number
+  id: number
 
   @IsInt()
   @ApiProperty()
@@ -27,7 +27,9 @@ export class Question extends Operation {
   @Index('question_reference_id_idx')
   referenceId: number
 
-  @OneToMany(() => Answer, (answer) => answer.question)
+  @OneToMany(() => Answer, (answer) => answer.question, {
+    cascade: true,
+  })
   answers: Answer[]
 
   @IsInt()
@@ -37,12 +39,12 @@ export class Question extends Operation {
 
   @IsString()
   @ApiProperty()
-  @Column({ type: 'text' })
+  @Column()
   title: string
 
   @IsString()
   @ApiProperty()
-  @Column({ type: 'text' })
+  @Column()
   description: string
 
   @IsString()
@@ -50,22 +52,13 @@ export class Question extends Operation {
   @Column({ type: 'varchar' })
   imageUrl: string
 
-  @IsEnum(QUESTION_STATUS_ENUM)
-  @ApiProperty()
-  @Column({
-    type: 'enum',
-    enum: QUESTION_STATUS_ENUM,
-    default: QUESTION_STATUS_ENUM.NORMAL,
-  })
-  status: QUESTION_STATUS_ENUM
-
   @IsInt()
   @ApiProperty()
   @Column({ type: 'int', default: 0 })
   multipled: number
 
   @IsEnum(QUESTION_TYPE_ENUM)
-  @ApiProperty()
+  @ApiProperty({ enum: QUESTION_TYPE_ENUM, default: QUESTION_TYPE_ENUM.TEXT })
   @Column({
     type: 'enum',
     enum: QUESTION_TYPE_ENUM,
@@ -77,9 +70,4 @@ export class Question extends Operation {
   @ApiProperty()
   @DeleteDateColumn()
   deletedAt: Date
-
-  @IsString()
-  @ApiProperty()
-  @Column({ type: 'varchar', nullable: true })
-  deletedBy: string
 }
