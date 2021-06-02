@@ -27,7 +27,10 @@ export class Answer extends Operation {
   id: number
 
   @ApiProperty({ type: () => Question })
-  @ManyToOne(() => Question, (question) => question.answers)
+  @ManyToOne(() => Question, (question) => question.answers, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   question: Question
 
   @IsInt()

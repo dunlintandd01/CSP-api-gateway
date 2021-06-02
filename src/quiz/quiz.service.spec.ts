@@ -100,8 +100,10 @@ describe('QuizService', () => {
 
   describe('deleteQuestion', () => {
     it('should execute delete func', async () => {
-      await service.deleteQuestions([fakeQuestionId])
-      expect(QuestionRepo.softDelete).toHaveBeenCalledWith([fakeQuestionId])
+      await service.deleteQuestions(fakeReferenceId)
+      expect(QuestionRepo.softDelete).toHaveBeenCalledWith({
+        referenceId: fakeReferenceId,
+      })
     })
   })
 

@@ -22,7 +22,7 @@ import { QuizModule } from './quiz/quiz.module'
         password: configService.get<string>('MYSQL_PASSWORD'),
         database: configService.get<string>('MYSQL_DATABASE'),
         autoLoadEntities: true,
-        synchronize: true,
+        // synchronize: true,
         logging: true,
       }),
       inject: [ConfigService],
