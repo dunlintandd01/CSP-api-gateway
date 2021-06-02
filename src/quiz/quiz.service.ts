@@ -80,8 +80,9 @@ export class QuizService {
     return result
   }
 
-  async deleteQuestions(ids: number[]): Promise<void> {
-    await this.questionRepository.softDelete(ids)
+  async deleteQuestions(referenceId: number): Promise<void> {
+    await this.questionRepository.softDelete({ referenceId: referenceId })
+    //TODO: delete related answers
     return
   }
 

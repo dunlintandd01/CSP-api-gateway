@@ -19,7 +19,7 @@ export class RewardManageService {
     operator: string,
   ): Promise<Reward[]> {
     const rewardList = []
-    for (let reward of rewards) {
+    for (const reward of rewards) {
       const newReward = new Reward()
       if (reward.id) {
         newReward.id = reward.id
@@ -39,5 +39,10 @@ export class RewardManageService {
       where: { referenceId },
     })
     return result
+  }
+
+  async deleteRewards(referenceId: number): Promise<void> {
+    await this.rewardRepository.softDelete({ referenceId: referenceId })
+    return
   }
 }
