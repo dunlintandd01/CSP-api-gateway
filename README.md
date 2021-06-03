@@ -1,5 +1,10 @@
 # MCGame
 
+## Tech Stack
+
+- http framework using [Nest.js](https://docs.nestjs.com/)
+- database ORM using [TypeORM](https://github.com/typeorm/typeorm)(Mysql)
+
 ## Installation
 
 ```bash
@@ -32,4 +37,8 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## 
+## Q&A
+
+### we are using TypeORM to manage entities relation
+
+More detail please check [TypeORM docs](https://github.com/typeorm/typeorm/blob/master/docs/relations.md)
