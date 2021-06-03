@@ -209,4 +209,22 @@ describe('Game Admin Controller', () => {
       expect(await controller.deleteGame(fakeID)).toBeUndefined()
     })
   })
+
+  describe('publish game', () => {
+    it('should call game update func', async () => {
+      await controller.publishGame(fakeID)
+      expect(GameRepo.update).toHaveBeenCalledWith(fakeID, {
+        status: 'PUBLISHED',
+      })
+    })
+  })
+
+  describe('unpublish game', () => {
+    it('should call game update func', async () => {
+      await controller.unpublishGame(fakeID)
+      expect(GameRepo.update).toHaveBeenCalledWith(fakeID, {
+        status: 'DRAFT',
+      })
+    })
+  })
 })
