@@ -14,61 +14,42 @@ export class LotteryService {
     private readonly limitRewardService: LimitRewardService,
   ) {}
 
-  async getRewardIds(referenceId: number): Promise<number[]> {
-    return []
-  }
-
-  async lottery(referenceId: number, userId: number) {
-    let lotteryReward: Reward | null = null
-    let instantStock = 0
-    const rewardIds = await this.getRewardIds(referenceId)
-    const rewards = await Promise.all(
-      rewardIds.map((rewardId) => this.rewardService.getRewardById(rewardId)),
-    )
+  async lottery(referenceId: number, userId: number): Promise<Reward> {
+    let lotteryReward: Reward | null
+    let instantStock: number
     let retryCount = 5
     try {
       while (retryCount > 0) {
-        let inStockLimitedLotteryRewardList: Reward[] = []
-        let unlimitedLotteryRewardList: Reward[] = []
-        for (let reward of rewards) {
-          if (reward.stockType == STOCK_TYPE.UNLIMITED) {
-            unlimitedLotteryRewardList.push(reward)
-          }
-          if (reward.stockType == STOCK_TYPE.LIMITED) {
-            const stock = await this.limitRewardService.getStock(reward.id)
-            if (stock > 0) {
-              instantStock = stock
-              inStockLimitedLotteryRewardList.push(reward)
-            }
-          }
-        }
-        if (inStockLimitedLotteryRewardList.length > 0) {
+        const inStockLimitedRewards = await this.limitRewardService.getRewards(
+          referenceId,
+        )
+        const unlimitedRewards: Reward[] =
+          await this.rewardService.getUnlimitedRewards(referenceId)
+        if (inStockLimitedRewards.length > 0) {
           lotteryReward = new Chance().weighted(
-            R.concat(
-              inStockLimitedLotteryRewardList,
-              unlimitedLotteryRewardList,
+            R.concat(inStockLimitedRewards, unlimitedRewards),
+            R.concat(inStockLimitedRewards, unlimitedRewards).map(
+              (reward: Reward) => Number(reward.probability),
             ),
-            R.concat(
-              inStockLimitedLotteryRewardList,
-              unlimitedLotteryRewardList,
-            ).map((reward: Reward) => Number(reward.probability)),
           )
-
           // decrement stock
           if (lotteryReward.stockType == STOCK_TYPE.LIMITED) {
-            const status = await this.limitRewardService.decrementStock(
-              lotteryReward.id,
-            )
-            if (!status) {
+            try {
+              instantStock = await this.limitRewardService.decrementStock(
+                lotteryReward.id,
+              )
+              break
+            } catch (err) {
               retryCount -= 1
               continue
             }
+          } else {
+            break
           }
-          break
-        } else if (unlimitedLotteryRewardList.length > 0) {
+        } else if (unlimitedRewards.length > 0) {
           lotteryReward = new Chance().weighted(
-            unlimitedLotteryRewardList,
-            unlimitedLotteryRewardList.map((reward: Reward) =>
+            unlimitedRewards,
+            unlimitedRewards.map((reward: Reward) =>
               Number(reward.probability),
             ),
           )
@@ -90,5 +71,7 @@ export class LotteryService {
     if (!lotteryReward) {
       throw new Error('lottery error, can not get lottery reward')
     }
+
+    return lotteryReward
   }
 }
