@@ -123,6 +123,8 @@ export class GameManageService {
 
   async deleteGame(id: number): Promise<void> {
     await this.gameRepository.softDelete(id)
+    await this.quizService.deleteQuestions(id)
+    await this.rewardService.deleteRewards(id)
     return
   }
 }

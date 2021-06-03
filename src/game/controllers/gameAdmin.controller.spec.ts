@@ -54,9 +54,13 @@ describe('Game Admin Controller', () => {
     static softDelete = jest.fn().mockResolvedValue(null)
   }
 
-  class RewardRepo {}
+  class RewardRepo {
+    static softDelete = jest.fn().mockResolvedValue(null)
+  }
 
-  class QuestionRepo {}
+  class QuestionRepo {
+    static softDelete = jest.fn().mockResolvedValue(null)
+  }
 
   class AnswerRepo {}
 
