@@ -1,8 +1,10 @@
-import { Module, Provider, DynamicModule } from '@nestjs/common'
-import IORedis, { RedisOptions } from 'ioredis'
+import { Module, Provider, DynamicModule, Logger } from '@nestjs/common'
+import IORedis, { RedisOptions, Redis } from 'ioredis'
+import * as RedLock from 'redlock'
 
-import { getRedisToken } from './utils'
+import { getRedisToken, getRedLockToken } from './utils'
 import { RedisModuleAsyncOptions } from './interface'
+import { initRedLock } from './redlock'
 
 @Module({})
 export class RedisModule {
@@ -11,11 +13,17 @@ export class RedisModule {
       provide: getRedisToken(),
       useValue: new IORedis(options),
     }
+    const redLockProvider: Provider = {
+      provide: getRedLockToken(),
+      inject: [getRedisToken()],
+      useFactory: (redisConnection: Redis): RedLock =>
+        initRedLock(redisConnection),
+    }
     return {
       global: true,
       module: RedisModule,
-      providers: [redisConnectionProvider],
-      exports: [redisConnectionProvider],
+      providers: [redisConnectionProvider, redLockProvider],
+      exports: [redisConnectionProvider, redLockProvider],
     }
   }
   static forRootAsync(options: RedisModuleAsyncOptions): DynamicModule {
@@ -25,13 +33,19 @@ export class RedisModule {
         return new IORedis(options)
       },
     }
+    const redLockProvider: Provider = {
+      provide: getRedLockToken(),
+      inject: [getRedisToken()],
+      useFactory: (redisConnection: Redis): RedLock =>
+        initRedLock(redisConnection),
+    }
 
     return {
       global: true,
       module: RedisModule,
       imports: options.imports,
-      providers: [redisConnectionProvider],
-      exports: [redisConnectionProvider],
+      providers: [redisConnectionProvider, redLockProvider],
+      exports: [redisConnectionProvider, redLockProvider],
     }
   }
 }
