@@ -149,21 +149,18 @@ describe('Game Admin Controller', () => {
       jest
         .spyOn(quizService, 'saveQuestions')
         .mockResolvedValueOnce([question as Question])
-      expect(
-        await controller.createGame(
-          {
-            name: 'create a test game with questions',
-            questions: [question],
-          },
-          { user: fakeUser },
-        ),
-      ).toStrictEqual({
-        id: fakeID,
-        name: 'create a test game with questions',
-        questions: [question],
-        createdBy: fakeUserName,
-        updatedBy: fakeUserName,
-      })
+      const result = await controller.createGame(
+        {
+          name: 'create a test game with questions',
+          questions: [question],
+        },
+        { user: fakeUser },
+      )
+      expect(result.id).toBe(fakeID)
+      expect(result.code).toHaveLength(10)
+      expect(result.createdBy).toBe(fakeUserName)
+      expect(result.updatedBy).toBe(fakeUserName)
+      expect(result.questions).toStrictEqual([question])
     })
   })
 

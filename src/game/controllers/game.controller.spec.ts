@@ -32,16 +32,6 @@ describe('Game Controller', () => {
     static update = jest.fn().mockResolvedValue(null)
   }
 
-  class RewardRepo {
-    static findOne = jest.fn().mockResolvedValue(page)
-    static save = jest.fn().mockImplementation(() => {
-      return page.id ? page : Object.assign({ id: fakeID }, page)
-    })
-    static create = jest.fn().mockImplementation(() => page)
-    static softDelete = jest.fn().mockResolvedValue(null)
-    static update = jest.fn().mockResolvedValue(null)
-  }
-
   class RedisClient {
     static get = jest.fn().mockResolvedValue(JSON.stringify(game))
     static set = jest.fn().mockResolvedValue(true)
