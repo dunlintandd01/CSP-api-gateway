@@ -5,6 +5,7 @@ import * as R from 'ramda'
 import { urlAlphabet, customAlphabet } from 'nanoid'
 
 import { SaveGameReq } from '../dtos'
+import { GAME_STATUS_ENUM } from '../interfaces'
 import { Game, GamePage, Theme } from '../entities'
 import { RewardManageService } from '../../reward'
 import { QuizService } from '../../quiz'
@@ -125,6 +126,16 @@ export class GameManageService {
     await this.gameRepository.softDelete(id)
     await this.quizService.deleteQuestions(id)
     await this.rewardService.deleteRewards(id)
+    return
+  }
+
+  async publishGame(id: number): Promise<void> {
+    await this.gameRepository.update(id, { status: GAME_STATUS_ENUM.PUBLISHED })
+    return
+  }
+
+  async unpublishGame(id: number): Promise<void> {
+    await this.gameRepository.update(id, { status: GAME_STATUS_ENUM.DRAFT })
     return
   }
 }
