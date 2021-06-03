@@ -87,4 +87,18 @@ export class GameAdminController {
     await this.gameService.deleteGame(id)
     return
   }
+
+  @Put('/publish/:id')
+  @ApiOkResponse()
+  async publishGame(@Param('id') id: number): Promise<void> {
+    await this.gameService.publishGame(id)
+    return
+  }
+
+  @Put('/unpublish/:id')
+  @ApiOkResponse()
+  async unpublishGame(@Param('id') id: number): Promise<void> {
+    await this.gameService.unpublishGame(id)
+    return
+  }
 }
