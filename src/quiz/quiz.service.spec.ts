@@ -74,7 +74,7 @@ describe('QuizService', () => {
         ),
       ).toStrictEqual([
         R.merge(fakeQuestion, {
-          referenceId: fakeReferenceId,
+          gameId: fakeReferenceId,
           updatedBy: fakeUserName,
           answers: [answer],
         }),
@@ -102,7 +102,7 @@ describe('QuizService', () => {
     it('should execute delete func', async () => {
       await service.deleteQuestions(fakeReferenceId)
       expect(QuestionRepo.softDelete).toHaveBeenCalledWith({
-        referenceId: fakeReferenceId,
+        gameId: fakeReferenceId,
       })
     })
   })

@@ -174,6 +174,7 @@ export class Game extends Operation {
   rewards: Reward[]
 
   @ApiProperty({ type: Question, isArray: true })
+  @OneToMany(() => Question, (question) => question.gameId)
   questions: Question[]
 
   @DeleteDateColumn()
