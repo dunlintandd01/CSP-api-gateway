@@ -9,10 +9,10 @@ describe('LimitRewardService', () => {
   let service: RewardService
 
   const fakeID = 123
-  const fakeReferenceID = 321
+  const fakeGameID = 321
   const fakeReward = {
     id: fakeID,
-    referenceId: fakeReferenceID,
+    gameId: fakeGameID,
     stockType: STOCK_TYPE.UNLIMITED,
     totalAmount: 1,
     probability: 1,
@@ -57,7 +57,7 @@ describe('LimitRewardService', () => {
       // get reward from redis
       MockRedis.hgetall.mockResolvedValueOnce(fakeReward)
 
-      expect(await service.getUnlimitedRewards(fakeReferenceID)).toStrictEqual([
+      expect(await service.getUnlimitedRewards(fakeGameID)).toStrictEqual([
         fakeReward,
       ])
     })
@@ -70,7 +70,7 @@ describe('LimitRewardService', () => {
       // missing reward from redis
       MockRedis.hgetall.mockResolvedValueOnce(null)
 
-      expect(await service.getUnlimitedRewards(fakeReferenceID)).toStrictEqual([
+      expect(await service.getUnlimitedRewards(fakeGameID)).toStrictEqual([
         fakeReward,
       ])
     })

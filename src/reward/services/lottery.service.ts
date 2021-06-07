@@ -14,17 +14,17 @@ export class LotteryService {
     private readonly limitRewardService: LimitRewardService,
   ) {}
 
-  async lottery(referenceId: number, userId: number): Promise<Reward> {
+  async lottery(gameId: number, userId: number): Promise<Reward> {
     let lotteryReward: Reward | null
     let instantStock: number
     let retryCount = 5
     try {
       while (retryCount > 0) {
         const inStockLimitedRewards = await this.limitRewardService.getRewards(
-          referenceId,
+          gameId,
         )
         const unlimitedRewards: Reward[] =
-          await this.rewardService.getUnlimitedRewards(referenceId)
+          await this.rewardService.getUnlimitedRewards(gameId)
         if (inStockLimitedRewards.length > 0) {
           lotteryReward = new Chance().weighted(
             R.concat(inStockLimitedRewards, unlimitedRewards),
@@ -55,7 +55,7 @@ export class LotteryService {
           )
           break
         } else {
-          const lastReward = await this.rewardService.getLastReward(referenceId)
+          const lastReward = await this.rewardService.getLastReward(gameId)
           lotteryReward = lastReward
           break
         }

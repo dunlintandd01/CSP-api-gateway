@@ -12,7 +12,7 @@ import { Operation } from '../../common'
 import { REWARD_TYPE, STOCK_TYPE } from '../interfaces/reward'
 
 @Entity()
-@Index([`referenceId`, `deletedAt`, `probability`, `stockType`, `stockAmount`])
+@Index([`gameId`, `deletedAt`, `probability`, `stockType`, `stockAmount`])
 export class Reward extends Operation {
   @IsInt()
   @ApiProperty()
@@ -22,8 +22,10 @@ export class Reward extends Operation {
   @IsInt()
   @ApiProperty()
   @Column()
-  @Index('reference_idx')
-  referenceId: number
+  @Index('game_id_idx')
+  gameId: number
+
+  game: any
 
   @IsEnum(REWARD_TYPE)
   @ApiProperty({ enum: REWARD_TYPE })

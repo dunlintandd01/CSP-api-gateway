@@ -26,10 +26,8 @@ export class LimitRewardService {
     private readonly rewardService: RewardService,
   ) {}
 
-  private async getLmitedRewardIds(
-    referenceId: number | string,
-  ): Promise<number[]> {
-    const key = CacheKey.limitedRewardIds(referenceId)
+  private async getLmitedRewardIds(gameId: number): Promise<number[]> {
+    const key = CacheKey.limitedRewardIds(gameId)
     const [value, exists] = await Promise.all([
       this.redisClient.smembers(key),
       this.redisClient.exists(key),
@@ -40,7 +38,7 @@ export class LimitRewardService {
     const records = await this.rewardRepository.find({
       select: ['id'],
       where: {
-        referenceId,
+        gameId,
         probability: MoreThan(0),
         stockType: STOCK_TYPE.LIMITED,
         stockAmount: MoreThan(0),
@@ -75,8 +73,8 @@ export class LimitRewardService {
     }
   }
 
-  async getRewards(referenceId: number): Promise<Reward[]> {
-    const ids = await this.getLmitedRewardIds(referenceId)
+  async getRewards(gameId: number): Promise<Reward[]> {
+    const ids = await this.getLmitedRewardIds(gameId)
     const result: Reward[] = []
     for (const id of ids) {
       const stock = await this.getStock(Number(id))

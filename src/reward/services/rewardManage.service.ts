@@ -14,7 +14,7 @@ export class RewardManageService {
   ) {}
 
   async batchSave(
-    referenceId: number,
+    gameId: number,
     rewards: SaveReward[],
     operator: string,
   ): Promise<Reward[]> {
@@ -26,7 +26,7 @@ export class RewardManageService {
       } else {
         newReward.createdBy = operator
       }
-      newReward.referenceId = referenceId
+      newReward.gameId = gameId
       newReward.updatedBy = operator
       rewardList.push(R.merge(newReward, reward))
     }
@@ -34,15 +34,15 @@ export class RewardManageService {
     return result
   }
 
-  async getRewards(referenceId: number): Promise<Reward[]> {
+  async getRewards(gameId: number): Promise<Reward[]> {
     const result = await this.rewardRepository.find({
-      where: { referenceId },
+      where: { gameId },
     })
     return result
   }
 
-  async deleteRewards(referenceId: number): Promise<void> {
-    await this.rewardRepository.softDelete({ referenceId: referenceId })
+  async deleteRewards(gameId: number): Promise<void> {
+    await this.rewardRepository.softDelete({ gameId: gameId })
     return
   }
 }

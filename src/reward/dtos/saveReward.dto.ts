@@ -5,7 +5,7 @@ import { Reward } from '../entities'
 export class SaveReward extends PartialType(
   OmitType(Reward, [
     'id',
-    'referenceId',
+    'gameId',
     'createdAt',
     'createdBy',
     'updatedAt',

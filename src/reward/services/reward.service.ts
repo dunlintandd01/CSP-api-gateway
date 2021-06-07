@@ -30,22 +30,22 @@ export class RewardService {
     return result
   }
 
-  async getLastReward(referenceId: number): Promise<Reward> {
-    const cacheKey = CacheKey.lastReward(referenceId)
+  async getLastReward(gameId: number): Promise<Reward> {
+    const cacheKey = CacheKey.lastReward(gameId)
     const cache: unknown = await this.redisClient.hgetall(cacheKey)
     if (cache) {
       return cache as Reward
     }
     const result = await this.rewardRepository.findOne({
-      referenceId,
+      gameId,
       stockType: STOCK_TYPE.LAST_REWARD,
     })
     await this.redisClient.hmset(cacheKey, new Map(Object.entries(result)))
     return result
   }
 
-  private async getUnlimitedRewardIds(referenceId: number): Promise<number[]> {
-    const key = CacheKey.unLimitedRewardIds(referenceId)
+  private async getUnlimitedRewardIds(gameId: number): Promise<number[]> {
+    const key = CacheKey.unLimitedRewardIds(gameId)
     const [value, exists] = await Promise.all([
       this.redisClient.smembers(key),
       this.redisClient.exists(key),
@@ -56,7 +56,7 @@ export class RewardService {
     const records = await this.rewardRepository.find({
       select: ['id'],
       where: {
-        referenceId,
+        gameId,
         probability: MoreThan(0),
         stockType: STOCK_TYPE.LIMITED,
         stockAmount: MoreThan(0),
@@ -68,8 +68,8 @@ export class RewardService {
     return result
   }
 
-  async getUnlimitedRewards(referenceId: number): Promise<Reward[]> {
-    const ids = await this.getUnlimitedRewardIds(referenceId)
+  async getUnlimitedRewards(gameId: number): Promise<Reward[]> {
+    const ids = await this.getUnlimitedRewardIds(gameId)
     const result: Reward[] = []
     for (const id of ids) {
       const reward = await this.getRewardById(Number(id))

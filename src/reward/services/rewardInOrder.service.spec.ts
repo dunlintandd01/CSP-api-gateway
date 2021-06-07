@@ -9,11 +9,11 @@ describe('RewardInOrderService', () => {
   let service: RewardInOrderService
 
   const fakeID = 123
-  const fakeReferenceID = 321
+  const fakeGameID = 321
   const rewards = [
     {
       id: fakeID + 1,
-      referenceId: fakeReferenceID,
+      gameId: fakeGameID,
       rewardType: REWARD_TYPE.POINTS,
       stockType: STOCK_TYPE.LIMITED,
       totalAmount: 1,
@@ -22,7 +22,7 @@ describe('RewardInOrderService', () => {
     },
     {
       id: fakeID + 2,
-      referenceId: fakeReferenceID,
+      gameId: fakeGameID,
       rewardType: REWARD_TYPE.POINTS,
       stockType: STOCK_TYPE.LIMITED,
       totalAmount: 1,
@@ -31,7 +31,7 @@ describe('RewardInOrderService', () => {
     },
     {
       id: fakeID + 3,
-      referenceId: fakeReferenceID,
+      gameId: fakeGameID,
       rewardType: REWARD_TYPE.POINTS,
       stockType: STOCK_TYPE.UNLIMITED,
       totalAmount: 1,
@@ -81,9 +81,9 @@ describe('RewardInOrderService', () => {
 
   describe('reward in order test', () => {
     it('should return a reward', async () => {
-      expect(await service.reward(fakeReferenceID, fakeID)).toStrictEqual({
+      expect(await service.reward(fakeGameID, fakeID)).toStrictEqual({
         id: fakeID + 1,
-        referenceId: fakeReferenceID,
+        gameId: fakeGameID,
         rewardType: REWARD_TYPE.POINTS,
         stockType: STOCK_TYPE.LIMITED,
         totalAmount: 1,
@@ -99,9 +99,9 @@ describe('RewardInOrderService', () => {
         throw new Error()
       })
       MockLimitRewardService.decrementStock.mockResolvedValueOnce(true)
-      expect(await service.reward(fakeReferenceID, fakeID)).toStrictEqual({
+      expect(await service.reward(fakeGameID, fakeID)).toStrictEqual({
         id: fakeID + 1,
-        referenceId: fakeReferenceID,
+        gameId: fakeGameID,
         rewardType: REWARD_TYPE.POINTS,
         stockType: STOCK_TYPE.LIMITED,
         totalAmount: 1,

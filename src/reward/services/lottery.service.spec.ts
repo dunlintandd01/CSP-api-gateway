@@ -8,7 +8,7 @@ describe('RewardInOrderService', () => {
   let service: LotteryService
 
   const fakeID = 123
-  const fakeReferenceID = 321
+  const fakeGameID = 321
 
   class MockRewardService {
     static getUnlimitedRewards = jest.fn()
@@ -44,14 +44,14 @@ describe('RewardInOrderService', () => {
       MockLimitRewardService.getRewards.mockResolvedValueOnce([
         {
           id: fakeID + 1,
-          referenceId: fakeReferenceID,
+          gameId: fakeGameID,
           stockType: STOCK_TYPE.LIMITED,
           totalAmount: 1,
           probability: 0.998,
         },
         {
           id: fakeID + 2,
-          referenceId: fakeReferenceID,
+          gameId: fakeGameID,
           stockType: STOCK_TYPE.LIMITED,
           totalAmount: 1,
           probability: 0.001,
@@ -60,15 +60,15 @@ describe('RewardInOrderService', () => {
       MockRewardService.getUnlimitedRewards.mockResolvedValueOnce([
         {
           id: fakeID + 3,
-          referenceId: fakeReferenceID,
+          gameId: fakeGameID,
           stockType: STOCK_TYPE.UNLIMITED,
           totalAmount: 1,
           probability: 0.001,
         },
       ])
-      expect(await service.lottery(fakeReferenceID, fakeID)).toStrictEqual({
+      expect(await service.lottery(fakeGameID, fakeID)).toStrictEqual({
         id: fakeID + 1,
-        referenceId: fakeReferenceID,
+        gameId: fakeGameID,
         stockType: STOCK_TYPE.LIMITED,
         totalAmount: 1,
         probability: 0.998,
@@ -81,14 +81,14 @@ describe('RewardInOrderService', () => {
       MockLimitRewardService.getRewards.mockResolvedValueOnce([
         {
           id: fakeID + 1,
-          referenceId: fakeReferenceID,
+          gameId: fakeGameID,
           stockType: STOCK_TYPE.LIMITED,
           totalAmount: 1,
           probability: 0.001,
         },
         {
           id: fakeID + 2,
-          referenceId: fakeReferenceID,
+          gameId: fakeGameID,
           stockType: STOCK_TYPE.LIMITED,
           totalAmount: 1,
           probability: 0.001,
@@ -97,15 +97,15 @@ describe('RewardInOrderService', () => {
       MockRewardService.getUnlimitedRewards.mockResolvedValueOnce([
         {
           id: fakeID + 3,
-          referenceId: fakeReferenceID,
+          gameId: fakeGameID,
           stockType: STOCK_TYPE.UNLIMITED,
           totalAmount: 1,
           probability: 0.998,
         },
       ])
-      expect(await service.lottery(fakeReferenceID, fakeID)).toStrictEqual({
+      expect(await service.lottery(fakeGameID, fakeID)).toStrictEqual({
         id: fakeID + 3,
-        referenceId: fakeReferenceID,
+        gameId: fakeGameID,
         stockType: STOCK_TYPE.UNLIMITED,
         totalAmount: 1,
         probability: 0.998,
@@ -119,23 +119,23 @@ describe('RewardInOrderService', () => {
       MockRewardService.getUnlimitedRewards.mockResolvedValueOnce([
         {
           id: fakeID + 3,
-          referenceId: fakeReferenceID,
+          gameId: fakeGameID,
           stockType: STOCK_TYPE.UNLIMITED,
           totalAmount: 1,
           probability: 0.002,
         },
         {
           id: fakeID + 4,
-          referenceId: fakeReferenceID,
+          gameId: fakeGameID,
           stockType: STOCK_TYPE.UNLIMITED,
           totalAmount: 1,
           probability: 0.998,
         },
       ])
       MockLimitRewardService.getRewards.mockRejectedValueOnce([])
-      expect(await service.lottery(fakeReferenceID, fakeID)).toStrictEqual({
+      expect(await service.lottery(fakeGameID, fakeID)).toStrictEqual({
         id: fakeID + 4,
-        referenceId: fakeReferenceID,
+        gameId: fakeGameID,
         stockType: STOCK_TYPE.UNLIMITED,
         totalAmount: 1,
         probability: 0.998,

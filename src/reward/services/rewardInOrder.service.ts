@@ -13,17 +13,15 @@ export class RewardInOrderService {
     private readonly limitRewardService: LimitRewardService,
   ) {}
 
-  async reward(referenceId: number, userId: number): Promise<Reward> {
+  async reward(gameId: number, userId: number): Promise<Reward> {
     let retryCount = 5
     let result: Reward
     let instantStock: number
     try {
       while (retryCount > 0) {
-        const limitedRewards = await this.limitRewardService.getRewards(
-          referenceId,
-        )
+        const limitedRewards = await this.limitRewardService.getRewards(gameId)
         const unlimitedRewards = await this.rewardService.getUnlimitedRewards(
-          referenceId,
+          gameId,
         )
         const rewards = await R.sortBy(R.prop('rank'))(
           limitedRewards.concat(unlimitedRewards),
@@ -45,7 +43,7 @@ export class RewardInOrderService {
           result = reward
           break
         } else {
-          const lastReward = await this.rewardService.getLastReward(referenceId)
+          const lastReward = await this.rewardService.getLastReward(gameId)
           result = lastReward
           break
         }
