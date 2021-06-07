@@ -7,6 +7,7 @@ import * as R from 'ramda'
 import { Question, Answer } from './entities'
 import { SaveQuestion } from './dtos'
 import { InjectRedis } from '../core/redis'
+import { CacheKey } from './constants'
 
 @Injectable()
 export class QuizService {
@@ -49,9 +50,16 @@ export class QuizService {
           answers.push(answer)
         }
         question.answers = answers
+
+        if (question.id) {
+          await this.deleteNotExistAnswers(question.id, answers)
+        }
       }
       questions.push(question)
     }
+
+    await this.deleteNotExistQuestions(referenceId, questions)
+
     const result = await this.questionRepository.save(questions)
     return result
   }
@@ -87,24 +95,83 @@ export class QuizService {
   }
 
   async getQuestionsWithCache(referenceId: number): Promise<Question[]> {
-    const cacheKey = `questions_data:${referenceId}`
-    const cache = await this.redisClient.get(cacheKey)
+    const cache = await this.redisClient.get(CacheKey.questionList(referenceId))
     if (cache) {
       return JSON.parse(cache)
     }
     let result: Question[]
     if (!cache) {
       result = await this.questionRepository.find({
-        relations: ['answers'],
+        relations: [
+          'answers.id',
+          'answers.rank',
+          'answers.score',
+          'answers.type',
+          'answers.content',
+          'answers.imageUrl',
+          'answers.imageDescription',
+        ],
         where: { referenceId },
+        select: [
+          'id',
+          'title',
+          'type',
+          'rank',
+          'multipled',
+          'imageUrl',
+          'hintType',
+          'hintContent',
+        ],
       })
       for (const question of result) {
         question.answers = await this.answerRepository.find({
           where: { questionId: question.id },
         })
       }
-      await this.redisClient.set(cacheKey, JSON.stringify(result))
+      await this.redisClient.set(
+        CacheKey.questionList(referenceId),
+        JSON.stringify(result),
+      )
     }
     return result
+  }
+
+  private async deleteNotExistQuestions(
+    referenceId: number,
+    questions: Question[],
+  ): Promise<void> {
+    const currentQuestions = await this.questionRepository.find({
+      where: {
+        referenceId: referenceId,
+      },
+    })
+    const notExistQuestions = R.differenceWith(
+      (x, y) => x.id === y.id,
+      currentQuestions,
+      questions,
+    )
+    if (R.length(notExistQuestions) > 0) {
+      await this.questionRepository.softDelete(notExistQuestions)
+    }
+    return
+  }
+  private async deleteNotExistAnswers(
+    questionId: number,
+    anwers: Answer[],
+  ): Promise<void> {
+    const currentAnswers = await this.answerRepository.find({
+      where: {
+        questionId: questionId,
+      },
+    })
+    const notExistAnswers = R.differenceWith(
+      (x, y) => x.id === y.id,
+      currentAnswers,
+      anwers,
+    )
+    if (R.length(notExistAnswers) > 0) {
+      await this.answerRepository.softDelete(notExistAnswers)
+    }
+    return
   }
 }

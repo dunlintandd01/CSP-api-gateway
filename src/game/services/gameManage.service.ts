@@ -165,6 +165,7 @@ export class GameManageService {
 
   async unpublishGame(id: number): Promise<void> {
     await this.gameRepository.update(id, { status: GAME_STATUS_ENUM.DRAFT })
+    //TODO: clean cache
     return
   }
 }
