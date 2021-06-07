@@ -19,9 +19,9 @@ export class GameController {
   @ApiOkResponse({
     type: Game,
   })
-  @Get('/:id')
-  async getGame(@Param('id') id: number): Promise<Game> {
-    const result = await this.gameService.getGameWithCache(id)
+  @Get('/:code')
+  async getGame(@Param('code') code: string): Promise<Game> {
+    const result = await this.gameService.getGameWithCache(code)
     if (!result) {
       throw new HttpException('Game Not Found', HttpStatus.NOT_FOUND)
     }

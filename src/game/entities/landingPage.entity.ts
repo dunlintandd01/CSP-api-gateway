@@ -1,42 +1,52 @@
-import { Entity, Column, PrimaryColumn, DeleteDateColumn } from 'typeorm'
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  DeleteDateColumn,
+  OneToOne,
+  JoinColumn,
+} from 'typeorm'
+import { IsInt, IsString } from 'class-validator'
+import { ApiProperty } from '@nestjs/swagger'
 
 import { Operation } from '../../common'
+import { GamePage } from './gamePage.entity'
 
 @Entity()
 export class LandingPage extends Operation {
-  @PrimaryColumn()
-  pageId: number
+  @IsInt()
+  @ApiProperty()
+  @PrimaryGeneratedColumn()
+  id: number
 
+  @IsInt()
+  @ApiProperty()
+  @OneToOne(() => GamePage)
+  @JoinColumn()
+  page: GamePage
+
+  @IsString()
+  @ApiProperty()
   @Column()
   title: string
 
-  @Column()
+  @IsString()
+  @ApiProperty()
+  @Column({ type: 'text' })
   description: string
 
-  @Column()
-  titleImage: string
-
-  @Column()
-  contenTtitle: string
-
-  @Column()
-  contentDescription: string
-
-  @Column()
-  contentImage: string
-
+  @IsString()
+  @ApiProperty()
   @Column()
   startButtonText: string
 
-  @Column()
-  secondaryButtonText: string
-
-  @Column()
-  secondaryButtonLink: string
-
+  @IsString()
+  @ApiProperty()
   @Column()
   customButtonText: string
 
+  @IsString()
+  @ApiProperty()
   @Column()
   customButtonLink: string
 

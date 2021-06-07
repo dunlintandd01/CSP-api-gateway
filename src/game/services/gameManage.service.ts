@@ -4,11 +4,12 @@ import { Repository, Like } from 'typeorm'
 import * as R from 'ramda'
 import { urlAlphabet, customAlphabet } from 'nanoid'
 
-import { SaveGameReq } from '../dtos'
-import { GAME_STATUS_ENUM } from '../interfaces'
+import { SaveGameReq, SaveTheme, SavePage } from '../dtos'
+import { GAME_STATUS_ENUM, PAGE_TYPE } from '../interfaces'
 import { Game, GamePage, Theme } from '../entities'
 import { RewardManageService } from '../../reward'
 import { QuizService } from '../../quiz'
+import { PagesManageService } from './pagesManage.service'
 
 const nanoid = customAlphabet(urlAlphabet, 10)
 
@@ -21,6 +22,7 @@ export class GameManageService {
     private pageRepository: Repository<GamePage>,
     private readonly rewardService: RewardManageService,
     private readonly quizService: QuizService,
+    private readonly pagesManageService: PagesManageService,
   ) {}
 
   async saveGame(
@@ -41,35 +43,10 @@ export class GameManageService {
     game.updatedBy = operator
 
     if (data.pages) {
-      const pages = []
-      for (const pageData of data.pages) {
-        const page = new GamePage()
-        if (pageData.id) {
-          page.id = pageData.id
-        } else {
-          page.createdBy = operator
-        }
-        page.updatedBy = operator
-        page.pageType = pageData.pageType
-        page.rank = pageData.rank
-        await this.pageRepository.save(page)
-        if (pageData.theme) {
-          const theme = new Theme()
-          if (pageData.theme.id) {
-            theme.id = pageData.theme.id
-          }
-          page.theme = theme
-        }
-        pages.push(page)
-      }
-      game.pages = pages
+      game.pages = await this.newPages(data.pages, operator)
     }
     if (data.theme) {
-      const theme = new Theme()
-      if (data.theme.id) {
-        theme.id = data.theme.id
-      }
-      game.theme = theme
+      game.theme = this.newTheme(data.theme, operator)
     }
 
     const result = await this.gameRepository.save(game)
@@ -91,6 +68,58 @@ export class GameManageService {
     }
 
     return result
+  }
+
+  private newTheme(data: SaveTheme, operator: string): Theme {
+    let theme = new Theme()
+    if (data.id) {
+      theme.id = data.id
+    } else {
+      theme.createdBy = operator
+    }
+    theme.updatedBy = operator
+    theme = R.merge(data, theme)
+    return theme
+  }
+
+  private async newPages(
+    data: SavePage[],
+    operator: string,
+  ): Promise<GamePage[]> {
+    let pages: GamePage[]
+    for (const pageData of data) {
+      const page = new GamePage()
+      if (pageData.id) {
+        page.id = pageData.id
+      } else {
+        page.createdBy = operator
+      }
+      page.updatedBy = operator
+      page.pageType = pageData.pageType
+      page.rank = pageData.rank
+      if (pageData.theme) {
+        page.theme = this.newTheme(pageData.theme, operator)
+      }
+      const result = await this.pageRepository.save(page)
+      switch (page.pageType) {
+        case PAGE_TYPE.LANDING:
+          await this.pagesManageService.saveLandingPage(
+            result,
+            pageData.landingPage,
+          )
+          break
+        case PAGE_TYPE.RESULT:
+          await this.pagesManageService.saveResultPageModules(
+            result,
+            pageData.resultPageModules,
+          )
+          break
+        default:
+          break
+      }
+      pages.push(page)
+    }
+    return pages
   }
 
   async getWholeGame(id: number): Promise<Game> {

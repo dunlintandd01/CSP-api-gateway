@@ -5,8 +5,10 @@ import * as R from 'ramda'
 import { getRedisToken } from '../../core/redis'
 import { GameAdminController } from './gameAdmin.controller'
 import { GameManageService } from '../services/gameManage.service'
+import { PagesManageService } from '../services/pagesManage.service'
 import { RewardManageService, Reward } from '../../reward'
-import { Game, GamePage } from '../entities'
+import { Game, GamePage, LandingPage, ResultPageModule } from '../entities'
+import { ThemeMode } from '../interfaces'
 import { REWARD_TYPE, STOCK_TYPE } from '../../reward/interfaces/reward'
 import { QuizService, Question, Answer } from '../../quiz'
 
@@ -26,6 +28,14 @@ describe('Game Admin Controller', () => {
     stockType: STOCK_TYPE.LIMITED,
     totalAmount: 1,
     probability: 1,
+  }
+  const theme = {
+    mode: ThemeMode.dark,
+    themeColor: '#000000',
+    backgroundColor: '#000000',
+    backgroundImage: 'string',
+    desktopBannerImage: 'string',
+    mobileBannerImage: 'string',
   }
   const question = {
     id: fakeID,
@@ -63,6 +73,8 @@ describe('Game Admin Controller', () => {
   }
 
   class AnswerRepo {}
+  class MockPageRepository {}
+  class MockResultPageModule {}
 
   class RedisClient {
     static get = jest.fn().mockResolvedValue(JSON.stringify(game))
@@ -76,6 +88,7 @@ describe('Game Admin Controller', () => {
         GameManageService,
         RewardManageService,
         QuizService,
+        PagesManageService,
         {
           provide: getRepositoryToken(Game),
           useValue: GameRepo,
@@ -83,6 +96,14 @@ describe('Game Admin Controller', () => {
         {
           provide: getRepositoryToken(GamePage),
           useValue: GamePageRepo,
+        },
+        {
+          provide: getRepositoryToken(LandingPage),
+          useValue: MockPageRepository,
+        },
+        {
+          provide: getRepositoryToken(ResultPageModule),
+          useValue: MockResultPageModule,
         },
         {
           provide: getRepositoryToken(Reward),
@@ -118,13 +139,16 @@ describe('Game Admin Controller', () => {
   describe('create game', () => {
     it('should return a game', async () => {
       const result = await controller.createGame(
-        { name: 'create a test game' },
+        { name: 'create a test game', theme },
         { user: fakeUser },
       )
       expect(result.id).toBe(fakeID)
       expect(result.code).toHaveLength(10)
       expect(result.createdBy).toBe(fakeUserName)
       expect(result.updatedBy).toBe(fakeUserName)
+      expect(result.theme).toStrictEqual(
+        R.merge(theme, { createdBy: fakeUserName, updatedBy: fakeUserName }),
+      )
     })
   })
 

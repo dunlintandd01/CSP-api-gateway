@@ -9,6 +9,7 @@ import { GameManageService } from './services/gameManage.service'
 import { GameService } from './services/game.service'
 import { GameAdminController } from './controllers/gameAdmin.controller'
 import { GameController } from './controllers/game.controller'
+import { PagesManageService } from './services/pagesManage.service'
 import {
   Game,
   GamePage,
@@ -37,6 +38,6 @@ import {
     QuizModule,
   ],
   controllers: [GameAdminController, GameController],
-  providers: [GameService, GameManageService],
+  providers: [GameService, GameManageService, PagesManageService],
 })
 export class GameModule {}

@@ -1,6 +1,12 @@
 import { OmitType, PartialType, ApiPropertyOptional } from '@nestjs/swagger'
 
-import { Game, GamePage, Theme } from '../entities'
+import {
+  Game,
+  GamePage,
+  Theme,
+  LandingPage,
+  ResultPageModule,
+} from '../entities'
 import { SaveReward } from '../../reward'
 import { SaveQuestion } from '../../quiz'
 
@@ -17,7 +23,27 @@ export class SaveTheme extends PartialType(
   id?: number
 }
 
-export class SavePages extends PartialType(
+export class SaveLandingPage extends PartialType(
+  OmitType(LandingPage, ['id'] as const),
+) {
+  @ApiPropertyOptional()
+  id?: number
+}
+
+export class SaveResultPageModule extends PartialType(
+  OmitType(ResultPageModule, [
+    'id',
+    'createdAt',
+    'createdBy',
+    'updatedAt',
+    'updatedBy',
+  ] as const),
+) {
+  @ApiPropertyOptional()
+  id?: number
+}
+
+export class SavePage extends PartialType(
   OmitType(GamePage, [
     'id',
     'game',
@@ -33,6 +59,12 @@ export class SavePages extends PartialType(
 
   @ApiPropertyOptional({ type: SaveTheme })
   theme?: SaveTheme
+
+  @ApiPropertyOptional({ type: SaveLandingPage })
+  landingPage?: SaveLandingPage
+
+  @ApiPropertyOptional({ type: [SaveResultPageModule] })
+  resultPageModules?: SaveResultPageModule[]
 }
 
 export class SaveGameReq extends PartialType(
@@ -49,8 +81,8 @@ export class SaveGameReq extends PartialType(
     'questions',
   ] as const),
 ) {
-  @ApiPropertyOptional({ type: [SavePages] })
-  pages?: SavePages[]
+  @ApiPropertyOptional({ type: [SavePage] })
+  pages?: SavePage[]
 
   @ApiPropertyOptional({ type: SaveTheme })
   theme?: SaveTheme
