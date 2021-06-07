@@ -17,7 +17,8 @@ export class SaveAnswer extends PartialType(
 }
 export class SaveQuestion extends PartialType(
   OmitType(Question, [
-    'referenceId',
+    'gameId',
+    'pageId',
     'createdAt',
     'createdBy',
     'updatedAt',

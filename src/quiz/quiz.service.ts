@@ -20,7 +20,7 @@ export class QuizService {
   ) {}
 
   async saveQuestions(
-    referenceId: number,
+    gameId: number,
     data: SaveQuestion[],
     operator: string,
   ): Promise<Question[]> {
@@ -34,7 +34,7 @@ export class QuizService {
         question.createdBy = operator
       }
       question.updatedBy = operator
-      question.referenceId = referenceId
+      question.gameId = gameId
 
       if (questionData.answers) {
         const answers = []
@@ -58,7 +58,7 @@ export class QuizService {
       questions.push(question)
     }
 
-    await this.deleteNotExistQuestions(referenceId, questions)
+    await this.deleteNotExistQuestions(gameId, questions)
 
     const result = await this.questionRepository.save(questions)
     return result
@@ -75,10 +75,10 @@ export class QuizService {
     return result
   }
 
-  async getQuestions(referenceId: number): Promise<Question[]> {
+  async getQuestions(gameId: number): Promise<Question[]> {
     const result = await this.questionRepository.find({
       relations: ['answers'],
-      where: { referenceId },
+      where: { gameId },
     })
     for (const question of result) {
       question.answers = await this.answerRepository.find({
@@ -88,14 +88,14 @@ export class QuizService {
     return result
   }
 
-  async deleteQuestions(referenceId: number): Promise<void> {
-    await this.questionRepository.softDelete({ referenceId: referenceId })
+  async deleteQuestions(gameId: number): Promise<void> {
+    await this.questionRepository.softDelete({ gameId: gameId })
     //TODO: delete related answers
     return
   }
 
-  async getQuestionsWithCache(referenceId: number): Promise<Question[]> {
-    const cache = await this.redisClient.get(CacheKey.questionList(referenceId))
+  async getQuestionsWithCache(gameId: number): Promise<Question[]> {
+    const cache = await this.redisClient.get(CacheKey.questionList(gameId))
     if (cache) {
       return JSON.parse(cache)
     }
@@ -111,13 +111,12 @@ export class QuizService {
           'answers.imageUrl',
           'answers.imageDescription',
         ],
-        where: { referenceId },
+        where: { gameId },
         select: [
           'id',
           'title',
           'type',
-          'rank',
-          'multipled',
+          'isMultipled',
           'imageUrl',
           'hintType',
           'hintContent',
@@ -129,7 +128,7 @@ export class QuizService {
         })
       }
       await this.redisClient.set(
-        CacheKey.questionList(referenceId),
+        CacheKey.questionList(gameId),
         JSON.stringify(result),
       )
     }
@@ -137,12 +136,12 @@ export class QuizService {
   }
 
   private async deleteNotExistQuestions(
-    referenceId: number,
+    gameId: number,
     questions: Question[],
   ): Promise<void> {
     const currentQuestions = await this.questionRepository.find({
       where: {
-        referenceId: referenceId,
+        gameId: gameId,
       },
     })
     const notExistQuestions = R.differenceWith(
