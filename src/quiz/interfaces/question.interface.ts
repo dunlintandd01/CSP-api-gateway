@@ -2,3 +2,10 @@ export enum QUESTION_TYPE_ENUM {
   TEXT = 'TEXT',
   IMAGE = 'IMAGE',
 }
+
+export enum QUESTION_HINT_TYPE_ENUM {
+  NONE = 'NONE',
+  IMAGE = 'IMAGE',
+  ARTICLE = 'ARTICLE',
+  VIDEO = 'VIDEO',
+}

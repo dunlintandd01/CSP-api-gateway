@@ -6,12 +6,18 @@ import {
   DeleteDateColumn,
   OneToMany,
 } from 'typeorm'
-import { IsInt, IsString, IsEnum, IsDateString } from 'class-validator'
+import {
+  IsInt,
+  IsString,
+  IsEnum,
+  IsDateString,
+  IsObject,
+} from 'class-validator'
 import { ApiProperty } from '@nestjs/swagger'
 
 import { Operation } from '../../common'
 import { Answer } from './answer.entity'
-import { QUESTION_TYPE_ENUM } from '../interfaces'
+import { QUESTION_TYPE_ENUM, QUESTION_HINT_TYPE_ENUM } from '../interfaces'
 
 @Entity()
 @Index(['referenceId', 'rank'])
@@ -65,6 +71,28 @@ export class Question extends Operation {
     default: QUESTION_TYPE_ENUM.TEXT,
   })
   type: QUESTION_TYPE_ENUM
+
+  @IsEnum(QUESTION_HINT_TYPE_ENUM)
+  @ApiProperty({
+    enum: QUESTION_HINT_TYPE_ENUM,
+    default: QUESTION_HINT_TYPE_ENUM.NONE,
+  })
+  @Column({
+    type: 'enum',
+    enum: QUESTION_HINT_TYPE_ENUM,
+    default: QUESTION_HINT_TYPE_ENUM.NONE,
+  })
+  hintType: QUESTION_HINT_TYPE_ENUM
+
+  @IsObject()
+  @ApiProperty()
+  @Column({ type: 'simple-json' })
+  hintContent: {
+    articleText: string
+    articleId: string
+    imageUrl: string
+    videoId: string
+  }
 
   @IsDateString()
   @ApiProperty()

@@ -9,6 +9,7 @@ export class SaveAnswer extends PartialType(
     'createdBy',
     'updatedAt',
     'updatedBy',
+    'question',
   ] as const),
 ) {
   @ApiPropertyOptional()
